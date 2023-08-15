@@ -80,7 +80,7 @@ const handlePassword = () => {
       .catch(error => {
         console.error(errorKeys.errorVerificationCode, error);
         setError(errorKeys.errorVerificationCode);
-        setTimeout(fetchRandomNumber, 5000); // 15 saniye sonra tekrar dene
+        setTimeout(fetchRandomNumber, 5000); // 5 saniye sonra tekrar dene
       });
   };
 

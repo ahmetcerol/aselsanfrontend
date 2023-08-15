@@ -25,7 +25,7 @@ const SignUp = ({ isLoggedIn, setIsLoggedIn }) => {
       .catch(error => {
         console.error(errorKeys.errorVerificationCode, error);
         setError(errorKeys.errorVerificationCode);
-        setTimeout(fetchRandomNumber, 5000); // 15 saniye sonra tekrar dene
+        setTimeout(fetchRandomNumber, 5000); // 5 saniye sonra tekrar dene
       });
   };
 
@@ -75,7 +75,7 @@ const navigate = useNavigate();
           <FormGroup>
             <FormElement>
               <FormElementLabel>Uyruk</FormElementLabel>
-              <Saelect value={formData.nationality} onChange={handleInputChange}>
+              <Saelect name="nationality" value={formData.nationality} onChange={handleInputChange}>
                 <option value={"Türkiye Cumhuriyeti"}>Türkiye Cumhuriyeti</option>
                 <option value={"Diğer"}>Diğer</option>
               </Saelect>
