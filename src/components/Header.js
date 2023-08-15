@@ -5,7 +5,7 @@ import HeaderKeys from "../keys/HeaderKeys";
 import genelKey from "../keys/genelKeys";
 import axios from 'axios';
 
-const Header = ({isLoggedIn,tcKimlikNo}) => {
+const Header = ({isLoggedIn}) => {
 
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -34,23 +34,7 @@ const Header = ({isLoggedIn,tcKimlikNo}) => {
         };
       }, []);
 
-      const [userInfo, setUserInfo] = useState('');
 
-  const getUserInfo = () => {
-    axios.get(`http://localhost:8080/${tcKimlikNo}`)
-      .then(response => {
-        setUserInfo(response.data);
-        
-      })
-      .catch(error => {
-        console.error('aaaaaa:', error);
-      });
-  };
-
-  useEffect(() => {
-    getUserInfo();
-  }, []);
-    
 
     return (
         <Nav>
@@ -61,7 +45,7 @@ const Header = ({isLoggedIn,tcKimlikNo}) => {
             </Logo>
             {isLoggedIn && ( // Eğer kullanıcı giriş yapmışsa
                 <NavMenu>
-                  <Profile>{userInfo}</Profile>
+                 
                 </NavMenu>
                   )}
 
@@ -170,15 +154,6 @@ a  {
     display: none;
 }
 `;
-const Profile = styled.p`
-        color:#090382;
-        font-size: 12px;
-        letter-spacing: 1.42px;
-        line-height: 1.08;
-        padding: 2px 0px;
-        white-space: nowrap;
-        position: relative;
-        font-weight: 700;`;
 
 const Logo= styled.a`
  padding: 0;
@@ -194,7 +169,6 @@ const Logo= styled.a`
  }
 `;
 
-
 const DropdownToggle = styled.a`
     
     cursor: pointer;
@@ -202,8 +176,6 @@ const DropdownToggle = styled.a`
     align-items: center;
     position: relative;
 `;
-
-
 
 const DropdownContent = styled.div`
    

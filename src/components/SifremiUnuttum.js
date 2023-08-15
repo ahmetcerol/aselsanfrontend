@@ -4,11 +4,69 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useEffect } from "react";
 import errorKeys from "../keys/errorKeys";
+import { useNavigate } from 'react-router-dom';
 
-const ForgotPassword = (props) => {
 
-  const [loginStatus, setLoginStatus] = useState('');
 
+const ForgotPassword = () => {
+  const navigate = useNavigate();
+
+  
+  const [user, setUser] = useState({
+  
+    tcKimlikNo: "",
+    eposta: "",
+    authentication: ""
+});
+
+const [loginStatus, setLoginStatus] = useState('');
+const [passwordStatus, setPasswordStatus] = useState('');
+const [password, setNewPassword] = useState("");
+const [confirmNewPassword, setConfirmNewPassword] = useState("");
+
+const handleUpdatePassword = () => {
+  if (password !== confirmNewPassword) {
+    setLoginStatus('Yeni şifreler uyuşmuyor.');
+    return;
+  }
+
+  const updatePasswordData = {
+    tcKimlikNo: user.tcKimlikNo,
+    password: password
+  };
+
+  axios.post("http://localhost:8080/updatePassword", updatePasswordData)
+    .then(response => {
+      setPasswordStatus(response.data);
+      if (response.data === "Şifre başarıyla güncellendi !!!") {
+        navigate('/SignIn')
+    }
+    })
+    .catch(error => {
+      console.error('Şifre güncelleme hatası:', error);
+      setPasswordStatus('Şifre güncelleme başarısız! Lütfen tekrar deneyin.');
+    });
+};
+
+const handleInputChange = (event) => {
+  const { name, value } = event.target;
+  setUser({ ...user, [name]: value });
+};
+
+
+const handlePassword = () => {
+  axios.post("http://localhost:8080/forgotPassword", user)
+    .then(response => {
+        setLoginStatus(response.data);
+        if (response.data === "Şifrenizi değiştirebilirsiniz") {
+            console.error('aaa');
+        }
+    })
+    .catch(error => {
+        console.error('Giriş hatası:', error);
+        setLoginStatus('Giriş başarısız! Lütfen bilgilerinizi kontrol edin.');
+    });
+};
 
   const [error, setError] = useState(null);
 
@@ -36,13 +94,57 @@ const ForgotPassword = (props) => {
         <FixedIcon src="/images/a-yetenek.png" alt="a-Yetenek" />
         <Info>a-Yetenek Şifremi Unuttum</Info>
         <CTA>
+
+        {loginStatus === "Şifrenizi değiştirebilirsiniz" ? (
+              <CTA>
+              <FormElements>
+                <FormElementInfo>Yeni Şifre</FormElementInfo>
+                <InputText type="password" placeholder="Şifre" value={password}
+                onChange={(e) => setNewPassword(e.target.value)}/>
+                <FormElementInfo>Yeni Şifre Tekrarı</FormElementInfo>
+                <InputText type="password" placeholder="Şifre Tekrarı"  value={confirmNewPassword}
+                onChange={(e) => setConfirmNewPassword(e.target.value)}/>
+               
+                <RowElements>
+                  <StyledA href="/SignIn">
+                    <span>Geri Dön</span>
+                  </StyledA>
+                  <StyledA onClick={handleUpdatePassword}>
+                    <span>Şifremi Sıfırla</span>
+                  </StyledA>
+                  
+                </RowElements>
+                <LoginStatus>{passwordStatus}</LoginStatus> 
+
+              </FormElements>
+            </CTA>
+            ) : (
+
           <FormElements>
             <FormElementInfo>T.C. Kimlik No</FormElementInfo>
-            <InputText type="text" maxLength={11} placeholder="T.C Kimlik Numarası"/>
+            <InputText 
+            type="text" 
+            name="tcKimlikNo"
+            value={user.tcKimlikNo}
+            maxLength={11} 
+            placeholder="T.C Kimlik Numarası"
+            onChange={handleInputChange}
+            />
             <FormElementInfo>E-posta Adresi</FormElementInfo>
-            <InputText type="email" placeholder="E - Posta"/>
+            <InputText 
+            type="email" 
+            name="eposta"
+            placeholder="E - Posta"
+            value={user.eposta}
+            onChange={handleInputChange}/>
            <RowElements> <FormElementInfo>Doğrulama Kodu</FormElementInfo>
-           <InputText type="text" maxLength={8}placeholder="KOD"/>
+           <InputText 
+           type="text" 
+           name="authentication"
+           maxLength={8}
+           placeholder="KOD"
+           value={user.authentication}
+           onChange={handleInputChange}/>
            {error ? (
       <LoginStatus>{error}</LoginStatus>
     ) : (
@@ -58,13 +160,13 @@ const ForgotPassword = (props) => {
               <StyledA href="/SignIn">
                 <span>Geri Dön</span>
               </StyledA>
-              <StyledA>
+              <StyledA onClick={handlePassword}>
                 <span>Şifremi Sıfırla</span>
               </StyledA>
                       <LoginStatus>{loginStatus}</LoginStatus> 
 
             </RowElements>
-          </FormElements>
+          </FormElements>)}
         </CTA>
         <BgImage />
       </Content>
@@ -189,8 +291,8 @@ letter-spacing: 1px;
 
 `;
 const LoginStatus = styled.p`
-    margin-top: 15px;
-    margin-left:15px;
+    margin-top: 30px;
+    margin-left:30px;
     font-size: 14px;
     color: ${props => props.success ? "green" : "red"};
 `;

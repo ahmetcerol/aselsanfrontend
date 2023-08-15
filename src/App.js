@@ -18,16 +18,16 @@ import KisiselVeriler from './components/kisiselVeriler';
 function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [tcKimlikNo, setTcKimlik] = useState("");
+  
 
   return (
     <div className="App">
         <Router>
-          <Header isLoggedIn={isLoggedIn} tcKimlikNo={tcKimlikNo}/>
+          <Header isLoggedIn={isLoggedIn} />
           <Routes>
-              <Route exact path ="/veri" element = {<KisiselVeriler isLoggedIn={isLoggedIn}/>}/>
+              <Route exact path ="/veri" element = {<KisiselVeriler isLoggedIn={isLoggedIn} />}/>
               <Route exact path= "/" element = {<Login/>}/>
-              <Route exact path="/SignIn" element = {<SignIn isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} tcKimlikNo={tcKimlikNo} setTcKimlik={setTcKimlik}/>}/>
+              <Route exact path="/SignIn" element = {<SignIn isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />}/>
               <Route exact path="/AselsanKültür" element= {<AselsanKültür/>}/>
               <Route exact path="/SiziNelerBekliyor" element = {<SiziNelerBekliyor/>}/>
               <Route exact path="/Olanaklar" element={<Olanaklar/>}/>
@@ -36,7 +36,6 @@ function App() {
               <Route exact path="/YetenekProgrami" element={<YetenekProgrami/>}/>
               <Route exact path= "/ForgotPassword" element = {<ForgotPassword/>}/>
               <Route exact path="/SignUp" element = {<SignUp isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />}/>
-             
           </Routes>
         </Router>
 

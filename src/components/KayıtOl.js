@@ -289,7 +289,8 @@ const Welcome = styled.button`
   border-radius: 100px;
   text-align: center;
   cursor: pointer;
-
+ user-select: none;
+ 
   &:hover {
     background-color: #3d78c4;
   }

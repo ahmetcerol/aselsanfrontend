@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import errorKeys from "../keys/errorKeys";
 
-const SignIn = ({ isLoggedIn, setIsLoggedIn,tcKimlikNo,setTcKimlik }) => {
+const SignIn = ({ isLoggedIn, setIsLoggedIn }) => {
 
   const navigate = useNavigate();
   
@@ -31,7 +31,6 @@ const handleLogin = () => {
         if (response.data === "Giriş başarılı!") {
           // Giriş başarılı ise, diğer sayfaya yönlendirebilirsiniz
           setIsLoggedIn(true);
-          setTcKimlik(user.tcKimlikNo);
           navigate('/veri');
 
         }
@@ -290,6 +289,7 @@ padding: 10.5px 0;
 border: 1px solid transparent;
 border-radius: 100px;
 text-align:center;
+ user-select: none;
 
 &:hover {
     background-color: #3d78c4;
