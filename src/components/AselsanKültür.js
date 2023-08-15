@@ -24,16 +24,17 @@ const Container = styled.section`
  display: flex;
  flex-direction: column;
  text-align: center;
- height: 100vh;
+ height: 110vh;
  
 `;
 const BgImage = styled.div `
 height: 100%;
-background-position: top;
+background-position: bottom;
 background-size: cover;
 background-repeat: no-repeat;
-background-image: url("/images/aselsan-manifest.jpg");
+background-image: url("/images/merhabalar.jpg");
 position: absolute;
+border-radius: 0 0 24px 24px;
 top: 0;
 right: 0;
 left: 0;
@@ -41,16 +42,15 @@ z-index: -1;
 `;
 const Content = styled.div `
 margin-bottom: 10vw;
-width: 100%;
 position: relative;
+width:40%;
 min-height: 100vh;
 box-sizing: border-box;
 display: flex;
-justify-content: top;
-align-items: center;
+justify-content: flex;
+align-items: flex-start;
 flex-direction: column;
 padding-top: 70px;
-height: 100%;
 `;
 const CTA = styled.div`
  width: 100%;

@@ -291,7 +291,6 @@ letter-spacing: 1px;
 
 `;
 const LoginStatus = styled.p`
-    margin-top: 30px;
     margin-left:30px;
     font-size: 14px;
     color: ${props => props.success ? "green" : "red"};
