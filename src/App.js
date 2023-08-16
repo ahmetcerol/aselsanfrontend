@@ -14,6 +14,7 @@ import ATik from './components/aTik';
 import ForgotPassword from './components/SifremiUnuttum';
 import SignUp from './components/KayıtOl';
 import KisiselVeriler from './components/kisiselVeriler';
+import DetailedUser from './components/DetailedUser';
 
 function App() {
 
@@ -36,6 +37,7 @@ function App() {
               <Route exact path="/YetenekProgrami" element={<YetenekProgrami/>}/>
               <Route exact path= "/ForgotPassword" element = {<ForgotPassword/>}/>
               <Route exact path="/SignUp" element = {<SignUp isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />}/>
+              <Route exact path='/DetailedUser' element ={<DetailedUser isLoggedIn={isLoggedIn} />}/>
           </Routes>
         </Router>
 

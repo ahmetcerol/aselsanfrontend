@@ -33,7 +33,7 @@ background-position: bottom;
 background-size: cover;
 background-repeat: no-repeat;
 background-image: url("/images/merhabalar.jpg");
-position: absolute;
+position: fixed;
 border-radius: 0 0 24px 24px;
 top: 0;
 right: 0;

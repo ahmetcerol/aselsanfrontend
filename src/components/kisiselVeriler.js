@@ -54,7 +54,7 @@ const KisiselVeriler =  ({ isLoggedIn }) => {
                     <WelcomeContainer>
                     <Welcome href="https://www.google.com/">Kişisel Verilerimi Sil !</Welcome>
                     <Welcome href="/">Reddediyorum (ASELSAN Ana Sayfaya Dönüş)</Welcome>
-                    <Welcome href="/başvuruEkranı">Onaylıyor ve Kabul Ediyorum</Welcome>
+                    <Welcome href="/DetailedUser">Onaylıyor ve Kabul Ediyorum</Welcome>
                     </WelcomeContainer>
                 </Section>
                 <FixedIcon src="/images/ASELSAN_logo.svg"/>
