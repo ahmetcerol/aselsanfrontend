@@ -1,8 +1,6 @@
 import styled from "styled-components";
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { Navigate } from 'react-router-dom'; 
 
 
 const DetailedUser = ({ isLoggedIn, setIsLoggedIn }) => {
@@ -68,6 +66,7 @@ const [error, setError] = useState(null);
                     type="text"
                     name="telephoneNumber"
                     placeholder="Telefon Numaranız"
+                    maxLength={11} 
                     value={user.telephoneNumber}
                     onChange={handleInputChange}
                 />
@@ -120,7 +119,7 @@ const [error, setError] = useState(null);
                 </RowElements>
                 <RowElements>
                 <CheckedBox type="checkbox" name="checkBox11" value={"Aviyonik Sistemler"}/>
-                <StyledB>Aviyonik Sistemlerr</StyledB>
+                <StyledB>Aviyonik Sistemler</StyledB>
                 </RowElements>
                 <RowElements>
                 <CheckedBox type="checkbox" name="checkBox12" value={"Yazılım Tasarım"}/>

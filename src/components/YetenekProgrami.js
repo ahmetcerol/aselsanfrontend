@@ -78,5 +78,8 @@ const FixedIcon = styled.img`
     width: 100px;
     height: auto;
     z-index: 10;
+    background-color: #f9f9f9;
+    border-radius: 10px;
 `;
+
 export default YetenekProgrami;
