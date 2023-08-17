@@ -1,40 +1,145 @@
 import styled from "styled-components";
 import React, { useState } from 'react';
-import axios from 'axios';
-import { Form } from "react-router-dom";
+
 
 
 const DetailedUser = () => {
 
-   
-   const [detailStatus, setDetailStatus]= useState('');
+  const [loginStatus, setLoginStatus] = useState('');
+  const [detailStatus, setDetailStatus]= useState('');
+  const [selectedInterests, setSelectedInterests] = useState([]); 
+
+const handleInputChangeUser = (event) => {
+    const { name, value } = event.target;
+    setUser({ ...user, [name]: value });
+};
+const handleInputChangeProje = (event) => {
+      const { name, value } = event.target;
+      setUserProje({ ...userProje, [name]: value });
+};
+  const handleInputChangeStaj = (event) => {
+    const { name, value } = event.target;
+    setUserStaj({ ...userStaj, [name]: value });
+};
+const handleInputChangeEgitim = (event) => {
+  const { name, value } = event.target;
+  setUserEgitimBilgileri({ ...userEgitimBilgileri, [name]: value });
+};
+const handleInputChangeKariyer = (event) => {
+  const { name, value } = event.target;
+  setUserKariyer({ ...userKariyer, [name]: value });
+};
+
+// Seçili ilgi alanlarını tutan durum değişkeni
   
-  const [user, setUser] = useState({
+const handleCheckboxChange = (event) => {
+      const value = event.target.value;
+      if (selectedInterests.includes(value)) {
+        // İlgili ilgi alanı zaten seçiliyse kaldır
+        setSelectedInterests(selectedInterests.filter(item => item !== value));
+      } else {
+        // İlgili ilgi alanı seçili değilse ekle
+        setSelectedInterests([...selectedInterests, value]);
+      }
+};
+  
+const [user, setUser] = useState({
    gender:"",
    telephoneNumber:"",
    aktif:true,
 });
-  
-const [loginStatus, setLoginStatus] = useState('');
+const [userEgitimBilgileri, setUserEgitimBilgileri]= useState({
+  okulAdi:"",
+  startDate:"",
+  finishDate:""
+});
+const[userStaj, setUserStaj] = useState({
+  stajYeri: "",
+  stajBölümü:"",
+  stajSüresi:"",
+  stajYili:"",
+  stajTürü:"",
+});
+const[userProje, setUserProje] = useState({
+  projeAdi:"",
+  projeDeadlines:"",
+  projeKurum:"",
+  projeDetay:"",
+});
+const[userKariyer, setUserKariyer] = useState({
+  kariyerHedefim:""
+});
 
-const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setUser({ ...user, [name]: value });
-};
 
 const handleUser = () => {
  
-        setDetailStatus("Deneyim Bilgileri")
-        window.scroll(0, 0); // API'den dönen veriyi duruma kaydediyoruz
+  axios.post('http://localhost:8080/user/detailed/${tcKimlikNo}', user)
+      .then(response => {
+        setLoginStatus(response.data);
+        if(response.data === "Detaylı kullanıcı bilgileri kaydedildi.");
+        setDetailStatus("Deneyim Bilgileri");
+        window.scroll(0, 0);
+      }).catch(error => {
+        console.error('Hatalı bir işlem yaptınız:',error);
+        setDetailStatus("");
+        setLoginStatus('Hatalı bir işlem yaptınız, lütfen tekrar deneyin.');
+      });
+      
 };
-
+const handleEgitim = () => {
+  axios.post('http://localhost:8080/${tcKimlikNo}/egitimBilgilerim',userEgitimBilgileri)
+  .then(response =>{
+    setLoginStatus(response.data);
+  }).catch(error =>{
+    console.error('Hatalı bir işlem gerçekleştirdiniz', error);
+    setLoginStatus('Hatalı bir işlem yaptınız, lüften tekra deneyiniz!')
+  })
+};
+const handleStaj = () => {
+  axios.post('http://localhost:8080/${tcKimlikNo}/stajBilgileri',userStaj)
+  .then(response => {
+    setLoginStatus(response.data);
+  }).catch(error => {
+    console.error('Giriş hatası:',error);
+    setLoginStatus("Hatalı bir işlem gerçekleştirdiniz lütfen tekrar deneyiniz !");
+  })
+};
+const handleProje = () => {
+  axios.post('http://localhost:8080/${tcKimlikNo}/projeDeneyimleri',userProje)
+  .then(response => {
+    setLoginStatus(response.data);
+  }).catch(error => {
+    console.error('Giriş hatası:',error);
+    setLoginStatus("Hatalı bir işlem gerçekleştirdiniz lütfen tekrar deneyiniz !");
+  })
+};
+const handlekariyerHedeflerim = () => {
+  axios.post('http://localhost:8080/${tcKimlikNo}/kariyerHedeflerim',userKariyer)
+  .then(response => {
+    setLoginStatus(response.data);
+  }).catch(error => {
+    console.error('Giriş hatası:',error);
+    setLoginStatus("Hatalı bir işlem gerçekleştirdiniz lütfen tekrar deneyiniz !");
+  })
+};
+const sendInterestsToDatabase = () => {
+  axios.post("http://localhost:8080/${tcKimlikNo}/adresler", selectedInterests) // Axios ile POST isteği gönderiyoruz
+    .then(response => {
+      console.log("Veritabanına gönderildi:", response.data);
+      // Gerekirse veritabanına gönderildiğini kullanıcıya bildirebilirsiniz
+    })
+    .catch(error => {
+      console.error("Hata oluştu:", error);
+    });
+};
+const handleUserAndSendInterests = () => {
+  handleUser(); // İlk fonksiyonu çağır
+  sendInterestsToDatabase(); // İkinci fonksiyonu çağır
+};
 
 const handleUserBack = () => {
   setDetailStatus("") // API'den dönen veriyi duruma kaydediyoruz
 };
-
-
-const [error, setError] = useState(null);
 
 
 
@@ -47,8 +152,14 @@ const [error, setError] = useState(null);
              {detailStatus === "Deneyim Bilgileri"  ? (
         
         <Content>
-          <ParagrafIçerik>Bu bölümde birden fazla Proje ve Staj bilgisi ekleyebilirsiniz. Eklemek istediğiniz projeleri ve staj bilgilerini ekle tuşuna basarak kaydettikten sonra Kariyer hedefinizi de doldurarak Kaydet ve İlerle seçeneği ile başvurunuzu tamamlayabilirsiniz !</ParagrafIçerik>
-         <Info>Staj Bilgileri </Info>
+          
+          <ParagrafIçerik>Bu bölümde birden fazla Proje, 
+            Staj ve Eğitim bilgisi ekleyebilirsiniz. 
+            Eklemek istediğiniz projeleri, staj bilgilerini ve eğitimleri
+             ekle tuşuna basarak kaydettikten sonra Kariyer hedefinizi de 
+             doldurarak Kaydet ve İlerle seçeneği ile başvurunuzu tamamlayabilirsiniz !</ParagrafIçerik>
+      
+      <Info>Staj Bilgileri </Info>
           
           <CTA>
                 
@@ -56,6 +167,7 @@ const [error, setError] = useState(null);
                       <StajInfo>Staj Yeri</StajInfo>
                       <StajInfo>Staj Bölümü</StajInfo> 
                       <StajInfo>Staj Süresi</StajInfo>
+                      <StajInfo>Staj Yapılan Yıl</StajInfo>
                       <StajInfo>Staj Türü</StajInfo>
                 </FormElements>
                 
@@ -66,35 +178,48 @@ const [error, setError] = useState(null);
                   type="text"
                   name="stajYeri"
                   placeholder="Staj Yeri"
-                  maxLength={11} 
+                  maxLength={11}
+                  value={userStaj.stajYeri}
+                  onChange={handleInputChangeStaj} 
               />
                 <InputText
                   type="text"
                   name="stajBölümü"
                   placeholder="Staj Bölümü"
                   maxLength={11} 
+                  value={userStaj.stajBölümü}
+                  onChange={handleInputChangeStaj}
               />
                 <InputText
-                  type="text"
+                  type="number"
                   name="stajSüresi"
                   placeholder="Staj Süresi"
-                  maxLength={11} 
+                  maxLength={11}
+                  value={userStaj.stajSüresi}
+                  onChange={handleInputChangeStaj}
+
+
               />
+               <InputText type="date" 
+              name="stajYili" 
+              
+              value={userStaj.stajYili}
+              onChange={userStaj.handleInputChangeStaj}/>
                <Saelect
-                  name="stajTürü">
-                
-                  
+                  name="stajTürü"
+                  value={userStaj.stajTürü}
+                  onChange={handleInputChangeStaj}>
                               <option value={"Zorunlu"}>Zorunlu</option>
                               <option value={"Gönüllü"}>Gönüllü</option>
                       </Saelect>
 
-                      <Ekle><span>Ekle !</span></Ekle>
+                      <Ekle onClick={handleStaj}><span>Ekle !</span></Ekle>
 
 
               </FormElements>
               </CTA>
         
-        <Info2>Proje Bilgileri </Info2>
+      <Info2>Proje Bilgileri </Info2>
           
           <CTA>
                 
@@ -110,53 +235,105 @@ const [error, setError] = useState(null);
                   
                       <InputText
                   type="text"
-                  name="stajYeri"
+                  name="projeAdi"
                   placeholder="Proje Adı"
+                  value={userProje.projeAdi}
+                  onChange={handleInputChangeProje}
                   
               />
                 <InputText
                   type="text"
-                  name="stajBölümü"
+                  name="projeKurum"
                   placeholder="Proje Kurumu"
+                  value={userProje.projeKurum}
+                  onChange={handleInputChangeProje}
                   
               />
                 <InputText
                   type="text"
-                  name="stajSüresi"
+                  name="projeDeadlines"
                   placeholder="Proje Süresi"
+                  value={userProje.projeDeadlines}
+                  onChange={handleInputChangeProje}
                  
               />
               <TextArea
-                  name="stajSüresi"
+                  name="projeDetay"
                   placeholder="Proje Detay"
+                  value={userProje.projeDetay}
+                  onChange={handleInputChangeProje}
               />
               
 
-              <Ekle><span>Ekle !</span></Ekle>
+              <Ekle onClick={handleProje}><span>Ekle !</span></Ekle>
 
                
 
               </FormElements>
               </CTA>
 
+      <Info2>Eğitim Bilgileri </Info2>
+          
+          <CTA>
+                
+                <FormElements>
+                      <StajInfo>Okul Adı</StajInfo>
+                      <StajInfo>Başlangıç Tarihi</StajInfo> 
+                      <StajInfo>Bitiş Tarihi</StajInfo>
+                </FormElements>
+                
+                <FormElements>
+               
+                  
+                      <InputText
+                  type="text"
+                  name="okulAdi"
+                  placeholder="Okul Adı"
+                  value={userEgitimBilgileri.okulAdi}
+                  onChange={handleInputChangeEgitim}
+                  
+              />
+               <InputText type="date" 
+              name="startDate" 
+              value={userEgitimBilgileri.startDate}
+              onChange={handleInputChangeEgitim}/>
 
-              <Info2>Kariyer Hedeflerim </Info2>
-              <CTA>
+               <InputText type="date" 
+              name="finishDate" 
+              value={userEgitimBilgileri.birthDate}
+              onChange={handleInputChangeEgitim}/>
+               
+              
+
+              <Ekle onClick={handleEgitim}><span>Ekle !</span></Ekle>
+
+               
+
+              </FormElements>
+              </CTA>
+              
+      <Info2>Kariyer Hedeflerim </Info2>
+          <CTA>
                 <FormElements>
                 <KariyerInfo>Kısaca Kariyer Hedeflerinden Bahseder Misin ?</KariyerInfo>
                 </FormElements>
                 <FormElements>
-                <TextArea placeholder="Kariyer Hedeflerim"/>
+                <TextArea2 placeholder="Kariyer Hedeflerim"
+                name="kariyerHedefim"
+                value={userKariyer.kariyerHedefim}
+                onChange={handleInputChangeKariyer}
+                />
 
                 <RowElements>
                        
                        <StyledA onClick={handleUserBack}><span>Geri Git </span></StyledA>
-                       <StyledA ><span>Kaydet ve İlerle</span></StyledA>
+                       <StyledA onClick={handlekariyerHedeflerim}><span>Kaydet ve İlerle</span></StyledA>
                </RowElements>
                      <LoginStatus>{loginStatus}</LoginStatus> 
                 </FormElements>
               </CTA>
-             </Content>
+             
+        </Content>
         ) : (
           <Content>
             <Info>Kişisel Bilgiler </Info>
@@ -173,7 +350,7 @@ const [error, setError] = useState(null);
                 <Saelect
                   name="gender"
                   value={user.gender}
-                  onChange={handleInputChange}>
+                  onChange={handleInputChangeUser}>
                               <option value={"Erkek"}>Erkek</option>
                               <option value={"Kadın"}>Kadın</option>
                       </Saelect>
@@ -184,65 +361,104 @@ const [error, setError] = useState(null);
                   placeholder="Telefon Numaranız"
                   maxLength={11} 
                   value={user.telephoneNumber}
-                  onChange={handleInputChange}
+                  onChange={handleInputChangeUser}
               />
               <ParagrafIçerik>Aşağıda yer alan çalışma alanlarından en fazla 10 adet olacak şekilde, birden fazla seçim yapabilirsiniz.</ParagrafIçerik>
              
               <CTA2>
           <RowElements>
-              <CheckedBox type="checkbox" name="checkBox1" value={"Program/Proje Yönetimi"}/>
+              <CheckedBox type="checkbox" name="checkBox1" 
+              value={"Program/Proje Yönetimi"}
+              onChange={handleCheckboxChange}
+              checked={selectedInterests.includes("Program/Proje Yönetimi")}/>
               <StyledB>Program/Proje Yönetimi</StyledB>
               </RowElements>
               <RowElements>
-              <CheckedBox type="checkbox" name="checkBox2" value={"Tüketim"}/>
+              <CheckedBox type="checkbox" name="checkBox2" value={"Tüketim"}
+              onChange={handleCheckboxChange}
+              checked={selectedInterests.includes("Tüketim")}/>
               <StyledB>Tüketim</StyledB>
               </RowElements>
               <RowElements>
-              <CheckedBox type="checkbox" name="checkBox3" value={"Lojistik"}/>
+              <CheckedBox type="checkbox" name="checkBox3" value={"Lojistik"}
+              onChange={handleCheckboxChange}
+              checked={selectedInterests.includes("Lojistik")}/>
               <StyledB>Lojistik</StyledB>
               </RowElements>
               <RowElements>
-              <CheckedBox type="checkbox" name="checkBox4" value={"Kalite"}/>
+              <CheckedBox type="checkbox" name="checkBox4" value={"Kalite"}
+              onChange={handleCheckboxChange}
+              checked={selectedInterests.includes("Kalite")}/>
               <StyledB>Kalite</StyledB>
               </RowElements>
               <RowElements>
-              <CheckedBox type="checkbox" name="checkBox5" value={"İş Geliştirme"}/>
+              <CheckedBox type="checkbox" name="checkBox5" value={"İş Geliştirme"}
+              onChange={handleCheckboxChange}
+              checked={selectedInterests.includes("İş Geliştirme")}/>
               <StyledB>İş Geliştirme</StyledB>
               </RowElements>
               <RowElements>
-              <CheckedBox type="checkbox" name="checkBox6" value={"Bilgi Teknolojileri"}/>
+              <CheckedBox type="checkbox" name="checkBox6" 
+              value={"Bilgi Teknolojileri"}
+              onChange={handleCheckboxChange}
+          checked={selectedInterests.includes("Bilgi Teknolojileri")}/>
               <StyledB>Bilgi Teknolojileri</StyledB>
               </RowElements>
               <RowElements>
-              <CheckedBox type="checkbox" name="checkBox7" value={"Elektronik Donanım Tasarım"}/>
+              <CheckedBox type="checkbox" name="checkBox7"
+               value={"Elektronik Donanım Tasarım"}
+               onChange={handleCheckboxChange}
+              checked={selectedInterests.includes("Elektronik Donanım Tasarım")}/>
               <StyledB>Elektronik Donanım Tasarım</StyledB>
               </RowElements>
               <RowElements>
-              <CheckedBox type="checkbox" name="checkBox8" value={"Mekanik Tasarım"}/>
+              <CheckedBox type="checkbox" name="checkBox8" 
+              value={"Mekanik Tasarım"}
+              onChange={handleCheckboxChange}
+          checked={selectedInterests.includes("Mekanik Tasarım")}/>
               <StyledB>Mekanik Tasarım</StyledB>
               </RowElements>
               <RowElements>
-              <CheckedBox type="checkbox" name="checkBox9" value={"Optik Tasarım"}/>
+              <CheckedBox type="checkbox" name="checkBox9" 
+              value={"Optik Tasarım"}
+              onChange={handleCheckboxChange}
+             checked={selectedInterests.includes("Optik Tasarım")}
+              />
               <StyledB>Optik Tasarım</StyledB>
               </RowElements>
               <RowElements>
-              <CheckedBox type="checkbox" name="checkBox9" value={"Sistem Tasarım"}/>
-              <StyledB>Sistem Tasarım</StyledB>
+              <CheckedBox type="checkbox" name="checkBox9" 
+              value={"Sistem Tasarım"}
+              onChange={handleCheckboxChange}
+               checked={selectedInterests.includes("Sistem Tasarım")}/>
+               <StyledB>Sistem Tasarım</StyledB>
               </RowElements>
               <RowElements>
-              <CheckedBox type="checkbox" name="checkBox10" value={"Güdüm ve İnsansız Sistemler"}/>
+              <CheckedBox type="checkbox" name="checkBox10" 
+              value={"Güdüm ve İnsansız Sistemler"}
+              onChange={handleCheckboxChange}
+              checked={selectedInterests.includes("Güdüm ve İnsansız Sistemler")}/>
               <StyledB>Güdüm ve İnsansız Sistemler</StyledB>
               </RowElements>
               <RowElements>
-              <CheckedBox type="checkbox" name="checkBox11" value={"Aviyonik Sistemler"}/>
+              <CheckedBox type="checkbox" name="checkBox11" 
+              value={"Aviyonik Sistemler"}
+              onChange={handleCheckboxChange}
+          checked={selectedInterests.includes("Aviyonik Sistemler")}/>
               <StyledB>Aviyonik Sistemler</StyledB>
               </RowElements>
               <RowElements>
-              <CheckedBox type="checkbox" name="checkBox12" value={"Yazılım Tasarım"}/>
+              <CheckedBox type="checkbox" name="checkBox12" 
+              value={"Yazılım Tasarım"}
+              onChange={handleCheckboxChange}
+          checked={selectedInterests.includes("Yazılım Tasarım")}/>
               <StyledB>Yazılım Tasarım</StyledB>
               </RowElements>
               <RowElements>
-              <CheckedBox type="checkbox" name="checkBox12" value={"Gömülü Yazılım Tasarım"}/>
+              <CheckedBox type="checkbox" name="checkBox12" 
+              value={"Gömülü Yazılım Tasarım"}
+              onChange={handleCheckboxChange}
+          checked={selectedInterests.includes("Gömülü Yazılım Tasarım")}/>
               <StyledB>Gömülü Yazılım Tasarım</StyledB>
               </RowElements>
               
@@ -251,7 +467,7 @@ const [error, setError] = useState(null);
                 <RowElements>
                        
                         <StyledA href="/"><span>Çıkış Yapmak İstiyorum !</span></StyledA>
-                        <StyledA onClick={handleUser}><span>Kaydet ve İlerle</span></StyledA>
+                        <StyledA onClick={handleUserAndSendInterests}><span>Kaydet ve İlerle</span></StyledA>
                 </RowElements>
                       <LoginStatus>{loginStatus}</LoginStatus> 
 
@@ -298,11 +514,6 @@ const Saelect = styled.select`
     box-shadow: 0 0 4px rgba(9, 3, 130, 0.5); /* Add a subtle box shadow on focus */
   }
 `;
-
-
-
-
-
 const InputText = styled.input`
   margin-top: 35px;
   border-radius: 8px;
@@ -323,7 +534,6 @@ const InputText = styled.input`
     box-shadow: 0 0 4px rgba(9, 3, 130, 0.5); /* Add a subtle box shadow on focus */
   }
 `;
-
 const TextArea = styled.textarea`
   margin-top: 35px;
   border-radius: 8px;
@@ -344,7 +554,26 @@ resize: none;
     box-shadow: 0 0 4px rgba(9, 3, 130, 0.5); /* Add a subtle box shadow on focus */
   }
 `;
-
+const TextArea2 = styled.textarea`
+  margin-top: 35px;
+  border-radius: 8px;
+  width: 100%;
+  border-color: #f9f9f9;
+  letter-spacing: 1.5px;
+  text-align: center;
+  padding: 50px 18px; /* Add padding for better spacing */
+  font-size: 12px; /* Increase font size for better readability */
+  background-color: #f9f9f9; /* Add a light background color */
+  border: 1px solid #ccc; /* Add a light border */
+  color: #333; /* Set text color */
+  transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Add transitions */
+resize: none; 
+  &:focus {
+    outline: none;
+    border-color: #090382; /* Change border color on focus */
+    box-shadow: 0 0 4px rgba(9, 3, 130, 0.5); /* Add a subtle box shadow on focus */
+  }
+`;
 const CheckedBox = styled.input`
   margin-top: 35px;
   border-radius: 8px;
@@ -371,7 +600,6 @@ const LoginStatus = styled.p`
     font-size: 14px;
     color: ${props => props.success ? "green" : "red"};
 `;
-
 const FormElements = styled.div`
   max-width: 650px;
   width: 100%;
@@ -400,9 +628,8 @@ const FixedIcon = styled.img`
     height: auto;
     z-index: 10;
 `;
-
 const ParagrafIçerik= styled.p`
-color: #003087;
+color: #ff0000;
 text-align: left;
 font-size: 13px;
 margin-top:30px;
@@ -428,9 +655,8 @@ font-weight: 1000;
 text-align: left;
 margin: 0 0 24px;
 margin-top: 42px;
-letter-spacing: 1px;`;
-
-
+letter-spacing: 1px;
+`;
 const StajInfo= styled.p`
 color: #000000;
 font-size: 14px;
@@ -440,7 +666,6 @@ margin-top: 25px;
 letter-spacing: 1px;
 
 `;
-
 const Content = styled.div`
 margin-bottom: 10vw;
 width: 100%;
@@ -467,7 +692,6 @@ width: 100%;
 display: flex;
 flex-direction: column;
 `;
-
 const BgImage = styled.div`
 height: 100%;
 background-position: bottom;
@@ -489,7 +713,6 @@ margin-top: 30px;
 letter-spacing: 0.5px;
 line-height: 1.5;
 `;
-
 const Info2 = styled.p`
 color:#000000;
 font-size: 16px;
@@ -499,7 +722,6 @@ margin-top: 50px;
 letter-spacing: 0.5px;
 line-height: 1.5;
 `;
-
 const RowElements= styled.div`
 flex-direction: row;
 display: flex;
@@ -546,7 +768,6 @@ span {color:#090382;
  
 }
 `;
-
 const Ekle= styled.a`
 color: #000000;
 letter-spacing: 1.2px;
@@ -589,7 +810,6 @@ span {color:#090382;
  
 }
 `;
-
 const StyledB= styled.p`
 color: #000000;
 letter-spacing: 1.2px;
@@ -598,6 +818,7 @@ border: 1px solid transparent;
 text-align:center;
 margin-left: 12px;
 margin-top:40px;
-display:flex;`;
+display:flex;
+`;
 
 export default DetailedUser;
