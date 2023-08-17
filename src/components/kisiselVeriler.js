@@ -67,7 +67,6 @@ const Container = styled.div`
     background-color: #f9f9f9;
     border-radius:0 0 24px 24px;
 `;
-
 const Content = styled.div`
     max-width: 1200px;
     margin: 0 auto;
@@ -75,11 +74,9 @@ const Content = styled.div`
     margin-top:70px;
     border-radius: 0 0 24px 24px;
 `;
-
 const Section = styled.div`
     margin-bottom: 40px;
 `;
-
 const Link = styled.a`
     font-size: 16px;
     color: #003087;
@@ -90,7 +87,6 @@ const Link = styled.a`
         color: #0258f7;
     }
 `;
-
 const Description = styled.p`
     font-size: 16px;
     line-height: 1.5;
@@ -111,14 +107,11 @@ const FixedIcon = styled.img`
     height: auto;
     z-index: 10;
 `;
-
-
 const WelcomeContainer = styled.div`
   display: flex;
   flex-direction: row;
   margin-right:10px;
 `;
-
 const Welcome = styled.a`
 color: #f9f9f9;
 background-color: #090382;

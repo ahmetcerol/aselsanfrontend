@@ -4,11 +4,15 @@ import axios from 'axios';
 import { useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import errorKeys from "../keys/errorKeys";
+import { useUser } from "../context/UserContext";
 
 const SignIn = ({ isLoggedIn, setIsLoggedIn }) => {
 
   const navigate = useNavigate();
-  
+  const [error, setError] = useState(null);
+  const [randomNumber, setRandomNumber] = useState(null);
+  const [loginStatus, setLoginStatus] = useState('');
+  const {setTcKimlikNo} = useUser();
 
   const [user, setUser] = useState({
     nationality: 'Türkiye Cumhuriyeti',
@@ -16,14 +20,10 @@ const SignIn = ({ isLoggedIn, setIsLoggedIn }) => {
     password: '',
     authentication: ''
 });
-
-const [loginStatus, setLoginStatus] = useState('');
-
 const handleInputChange = (event) => {
     const { name, value } = event.target;
     setUser({ ...user, [name]: value });
 };
-
 const handleLogin = () => {
   axios.post('http://localhost:8080/login', user)
     .then(response => {
@@ -31,6 +31,7 @@ const handleLogin = () => {
         if (response.data === "Giriş başarılı!") {
           // Giriş başarılı ise, diğer sayfaya yönlendirebilirsiniz
           setIsLoggedIn(true);
+          setTcKimlikNo(user.tcKimlikNo);
           navigate('/veri');
 
         }
@@ -41,9 +42,6 @@ const handleLogin = () => {
         setLoginStatus('Giriş başarısız! Lütfen bilgilerinizi kontrol edin.');
     });
 };
-const [error, setError] = useState(null);
-
-const [randomNumber, setRandomNumber] = useState(null);
 const fetchRandomNumber = () => {
   axios.get('http://localhost:8080/api/generateRandomString')
     .then(response => {
@@ -60,7 +58,6 @@ const fetchRandomNumber = () => {
  useEffect(() => {
   fetchRandomNumber(); // İlk çağrı
   }, []);
-
 
     return (
         <Container>
@@ -168,7 +165,6 @@ const Saelect = styled.select`
     box-shadow: 0 0 4px rgba(9, 3, 130, 0.5); /* Add a subtle box shadow on focus */
   }
 `;
-
 const InputText = styled.input`
   margin-top: 35px;
   border-radius: 8px;
@@ -195,7 +191,6 @@ const LoginStatus = styled.p`
     font-size: 14px;
     color: ${props => props.success ? "green" : "red"};
 `;
-
 const FormElements = styled.div`
   max-width: 650px;
   width: 100%;
@@ -224,8 +219,6 @@ const FixedIcon = styled.img`
     height: auto;
     z-index: 10;
 `;
-
-
 const FormElementInfo= styled.p`
 color: #000000;
 font-size: 14px;
@@ -236,8 +229,6 @@ margin-top: 12px;
 letter-spacing: 1px;
 
 `;
-
-
 const Content = styled.div`
 margin-bottom: 10vw;
 width: 100%;
@@ -339,7 +330,6 @@ span {color:#090382;
  
 }
 `;
-
 const RandomNumberInfo = styled.p`
     font-size: 14px;
     color: #003087;
@@ -353,5 +343,4 @@ const RandomNumberInfo = styled.p`
     text-align:center;
     user-select: none;
 `;
-
 export default SignIn;

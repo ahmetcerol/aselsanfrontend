@@ -73,7 +73,6 @@ flex-direction: column;
 text-align: center;
 height: 100vh;
 `;
-
 const Content = styled.div`
 display: flex;
 justify-content: center;
@@ -81,14 +80,12 @@ align-items: center;
 flex-direction: column;
 height: 100%;
 `;
-
 const CtaWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-bottom: 30px;
 `;
-
 const RowElements = styled.div`
     display: flex;
     justify-content: center;
@@ -96,7 +93,6 @@ const RowElements = styled.div`
     width: 100%;
     margin-bottom: 30px;
 `;
-
 const CTAIcon = styled.img`
     max-width: 100px;
     display: block;
@@ -111,7 +107,6 @@ const FixedIcon = styled.img`
     height: auto;
     z-index: 10;
 `;
-
 const Cta = styled.div`
     max-width: 200px;
     width: 100%;
@@ -125,7 +120,6 @@ const Cta = styled.div`
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s, box-shadow 0.3s;
 `;
-
 const Başlıklar = styled.h3`
     color: #fff;
     text-align: center;
@@ -135,7 +129,6 @@ const Başlıklar = styled.h3`
     letter-spacing: 1.5px;
     margin: 10px 0;
 `;
-
 const Info = styled.p`
     color: #000000;
     font-size: 14px;
@@ -145,7 +138,6 @@ const Info = styled.p`
     opacity: 1;
     margin-top: 10px;
 `;
-
 const BgImage = styled.div`
     height: 100%;
     background-position: top;

@@ -43,7 +43,6 @@ const Container = styled.div`
     background-color: #f9f9f9;
     border-radius:0 0 24px 24px;
 `;
-
 const Content = styled.div`
     max-width: 1200px;
     margin: 0 auto;
@@ -51,20 +50,15 @@ const Content = styled.div`
     margin-top:70px;
     border-radius: 0 0 24px 24px;
 `;
-
 const Section = styled.div`
     margin-bottom: 40px;
 `;
-
-
-
 const Title = styled.h2`
     font-size: 24px;
     font-weight: 700;
     margin-bottom: 16px;
     color: #003087;
 `;
-
 const Description = styled.p`
     font-size: 16px;
     line-height: 1.5;

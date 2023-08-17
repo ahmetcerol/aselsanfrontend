@@ -13,7 +13,8 @@ const SignUp = ({ isLoggedIn, setIsLoggedIn }) => {
   today.setFullYear(today.getFullYear() - 18); // Bugünden 18 yıl çıkar
   const maxBirthDate = today.toISOString().split('T')[0]; // 18 yıl önceki tarih
   const [error, setError] = useState(null);
-
+  const [loginStatus, setLoginStatus] = useState('');
+  const navigate = useNavigate(); 
   const [randomNumber, setRandomNumber] = useState(null);
   
   const fetchRandomNumber = () => {
@@ -29,7 +30,7 @@ const SignUp = ({ isLoggedIn, setIsLoggedIn }) => {
       });
   };
 
-   useEffect(() => {
+  useEffect(() => {
     fetchRandomNumber(); // İlk çağrı
     },[]);
   
@@ -44,14 +45,13 @@ const SignUp = ({ isLoggedIn, setIsLoggedIn }) => {
       authentication: "",
     });
 
-    const handleInputChange = (event) => {
+  const handleInputChange = (event) => {
       const { name, value } = event.target;
       setFormData({ ...formData, [name]: value });
   };
-const [loginStatus, setLoginStatus] = useState('');
-const navigate = useNavigate();
 
-    const handleSubmit = () => {
+
+  const handleSubmit = () => {
       axios.post("http://localhost:8080/api/kisi", formData)
         .then((response) => {
          if(response.status ===200){
@@ -178,7 +178,6 @@ const Container = styled.section`
   flex-direction: column;
   height: 100vh;
 `;
-
 const Content = styled.div`
   width: 100%;
   position: relative;
@@ -191,21 +190,16 @@ const Content = styled.div`
   height: 100%;
   margin-top:20px;
 `;
-
-
-
 const Form = styled.div`
   max-width: 650px;
   width: 100%;
 `;
-
 const FormGroup = styled.div`
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
   margin-bottom: 20px;
 `;
-
 const FormElement = styled.div`
   flex: 1;
   margin-right: 20px;
@@ -217,14 +211,12 @@ const FormElement = styled.div`
     margin-right: 0;
   }
 `;
-
 const FormElementLabel = styled.label`
   color: #f9f9f9;
   font-size: 14px;
   font-weight: 700;
   margin-bottom: 5px;
 `;
-
 const Saelect = styled.select`
   height: auto;
   margin-top:35px;
@@ -246,7 +238,6 @@ const Saelect = styled.select`
     box-shadow: 0 0 4px rgba(9, 3, 130, 0.5); /* Add a subtle box shadow on focus */
   }
 `;
-
 const FixedIcon = styled.img`
     position: fixed;
     bottom: 20px;
@@ -255,7 +246,6 @@ const FixedIcon = styled.img`
     height: auto;
     z-index: 10;
 `;
-
 const InputText = styled.input`
   margin-top: 35px;
   border-radius: 8px;
@@ -276,7 +266,6 @@ const InputText = styled.input`
     box-shadow: 0 0 4px rgba(9, 3, 130, 0.5); /* Add a subtle box shadow on focus */
   }
 `;
-
 const Welcome = styled.button`
   font-weight: bold;
   color: #f9f9f9;
@@ -295,7 +284,6 @@ const Welcome = styled.button`
     background-color: #3d78c4;
   }
 `;
-
 const BgImage = styled.div`
   height: 100%;
   background-position: bottom;
@@ -309,7 +297,6 @@ const BgImage = styled.div`
   z-index: -1;
   opacity: 0.7;
 `;
-
 const StyledA= styled.a`
 color: #000000;
 letter-spacing: 1.2px;
@@ -351,7 +338,6 @@ span {color:#f9f9f9;
  
 }
 `;
-
 const RandomNumberInfo = styled.p`
     font-size: 14px;
     color: #003087;

@@ -4,21 +4,25 @@ import { useEffect,useRef } from "react";
 import HeaderKeys from "../keys/HeaderKeys";
 import genelKey from "../keys/genelKeys";
 import axios from 'axios';
+import { useUser } from "../context/UserContext";
+
 
 const Header = ({isLoggedIn}) => {
 
+const { tcKimlikNo } = useUser();
+const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-    const toggleDropdown = () => {
+const toggleDropdown = () => {
       setIsDropdownOpen(!isDropdownOpen);
-    };
+};
   
-    // Bu ref ile dropdown menüyü kapattığınızda başka bir tıklamayı dinlememesini sağlayabiliriz.
-    const dropdownRef = useRef(null);
-  
+ /* Bu ref ile dropdown menüyü kapattığınızda başka
+bir tıklamayı dinlememesini sağlayabiliriz.*/
 
-    useEffect(() => {
+ const dropdownRef = useRef(null);
+
+useEffect(() => {
+        fetchUserInfo();
         const handleOutsideClick = (event) => {
           if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
             setIsDropdownOpen(false);
@@ -27,14 +31,34 @@ const Header = ({isLoggedIn}) => {
     
         // window objesine click olayını ekle
         window.addEventListener("click", handleOutsideClick);
-    
+
         // Component çöktüğünde event listener'ı temizle
         return () => {
           window.removeEventListener("click", handleOutsideClick);
         };
-      }, []);
+        
+}, []);
 
+const [userInfo, setUserInfo] = useState({
+        ad: '',
+        soyad: '',
+        eposta: ''
+});
 
+const fetchUserInfo = () => {
+        axios.get(`http://localhost:8080/tcKimlikNo/${tcKimlikNo}`)
+          .then(response => {
+            const { ad, soyad, eposta } = response.data;
+            setUserInfo({
+              ad,
+              soyad,
+              eposta
+            });
+          })
+          .catch(error => {
+            console.error('Hata:', error);
+          });
+};
 
     return (
         <Nav>
@@ -45,12 +69,13 @@ const Header = ({isLoggedIn}) => {
             </Logo>
             {isLoggedIn && ( // Eğer kullanıcı giriş yapmışsa
                 <NavMenu>
-                 
-                </NavMenu>
-                  )}
-
-            {!isLoggedIn && ( // Eğer kullanıcı giriş yapmışsa 
-            <NavMenu>
+                 <Cta>
+                  <Profile>{userInfo.ad} {userInfo.soyad}</Profile>
+                  <Email>{userInfo.eposta}</Email>
+                 </Cta>
+                </NavMenu>)}
+            {!isLoggedIn && ( // Eğer kullanıcı giriş yapmamışsa 
+                <NavMenu>
             <a href="/YetenekProgrami">
                     <span >{HeaderKeys.kimlerBaşvurmalı}</span>
                 </a>
@@ -76,10 +101,9 @@ const Header = ({isLoggedIn}) => {
 
                 
                 </DropdownToggle>
-            </NavMenu>
-            )}
-        </Nav>
-    );
+                </NavMenu>)}
+        </Nav>);
+        
 }
 
 
@@ -154,7 +178,10 @@ a  {
     display: none;
 }
 `;
-
+const Cta = styled.div`
+display: flex;
+flex-direction: column;
+`;
 const Logo= styled.a`
  padding: 0;
  width: 80px;
@@ -168,7 +195,6 @@ const Logo= styled.a`
     width: 100%;
  }
 `;
-
 const DropdownToggle = styled.a`
     
     cursor: pointer;
@@ -176,7 +202,6 @@ const DropdownToggle = styled.a`
     align-items: center;
     position: relative;
 `;
-
 const DropdownContent = styled.div`
    
     position: absolute;
@@ -191,7 +216,6 @@ const DropdownContent = styled.div`
     z-index: 10;
     margin-top: 10px;
 `;
-
 const DropdownItem = styled.a`
     
     padding: 10px 15px;
@@ -206,14 +230,30 @@ const DropdownItem = styled.a`
         background-color: #003087;
     }
 `;
-
 const Icon = styled.img`
     width: 30px;
     height: 30px;
     margin-right: 10px;
 `;
-
-
-
+const Profile = styled.p`
+        color:#090382;
+        font-size: 12px;
+        letter-spacing: 1.42px;
+        line-height: 1.08;
+        padding: 2px 0px;
+        white-space: nowrap;
+        position: relative;
+        font-weight: 700;
+`;
+const Email = styled.p`
+        color:#090382;
+        font-size: 8px;
+        letter-spacing: 1.42px;
+        line-height: 1.08;
+        padding: 2px 0px;
+        white-space: nowrap;
+        position: relative;
+        font-weight: 700;
+`;
 
 export default Header;

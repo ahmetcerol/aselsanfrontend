@@ -13,7 +13,7 @@ const AselsanKültür = (props) => {
             </CTA>
             <FixedIcon src="/images/aselsan-logo.png"/>
         </Content>
-        <BgImage/>
+      <BgImage/>
     </Container>);
     
 }

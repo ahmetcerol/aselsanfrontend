@@ -108,7 +108,6 @@ const CTALogoTwo = styled.img`
   vertical-align: bottom;
   width: 100%;
 `;
-
 const FixedIcon = styled.img`
     position: fixed;
     bottom: 20px;

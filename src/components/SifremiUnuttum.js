@@ -9,9 +9,8 @@ import { useNavigate } from 'react-router-dom';
 
 
 const ForgotPassword = () => {
+ 
   const navigate = useNavigate();
-
-  
   const [user, setUser] = useState({
   
     tcKimlikNo: "",
@@ -19,12 +18,14 @@ const ForgotPassword = () => {
     authentication: ""
 });
 
-const [loginStatus, setLoginStatus] = useState('');
-const [passwordStatus, setPasswordStatus] = useState('');
-const [password, setNewPassword] = useState("");
-const [confirmNewPassword, setConfirmNewPassword] = useState("");
+  const [loginStatus, setLoginStatus] = useState('');
+  const [passwordStatus, setPasswordStatus] = useState('');
+  const [password, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
+  const [error, setError] = useState(null);
+  const [randomNumber, setRandomNumber] = useState(null);
 
-const handleUpdatePassword = () => {
+  const handleUpdatePassword = () => {
   if (password !== confirmNewPassword) {
     setLoginStatus('Yeni şifreler uyuşmuyor.');
     return;
@@ -48,13 +49,13 @@ const handleUpdatePassword = () => {
     });
 };
 
-const handleInputChange = (event) => {
+  const handleInputChange = (event) => {
   const { name, value } = event.target;
   setUser({ ...user, [name]: value });
 };
 
 
-const handlePassword = () => {
+  const handlePassword = () => {
   axios.post("http://localhost:8080/forgotPassword", user)
     .then(response => {
         setLoginStatus(response.data);
@@ -68,9 +69,6 @@ const handlePassword = () => {
     });
 };
 
-  const [error, setError] = useState(null);
-
-  const [randomNumber, setRandomNumber] = useState(null);
   const fetchRandomNumber = () => {
     axios.get('http://localhost:8080/api/generateRandomString')
       .then(response => {
@@ -181,7 +179,6 @@ const Container = styled.section`
   text-align: center;
   height: 100vh;
 `;
-
 const FixedIcon = styled.img`
   position: fixed;
   bottom: 20px;
@@ -190,7 +187,6 @@ const FixedIcon = styled.img`
   height: auto;
   z-index: 10;
 `;
-
 const InputText = styled.input`
   margin-bottom: 5px;
   border-radius: 8px;
@@ -211,8 +207,6 @@ const InputText = styled.input`
     box-shadow: 0 0 4px rgba(9, 3, 130, 0.5);
   }
 `;
-
-
 const FormElements = styled.div`
   max-width: 650px;
   width: 100%;
@@ -230,15 +224,11 @@ const FormElements = styled.div`
     margin-top: 15px;
   }
 `;
-
-
-
 const RowElements = styled.div`
   flex-direction: row;
   display: flex;
   margin-left: 150px;
 `;
-
 const StyledA = styled.a`
   color: #000000;
   letter-spacing: 1.2px;
@@ -308,7 +298,6 @@ const Content = styled.div`
   padding: 80px 40px;
   height: 100%;
 `;
-
 const BgImage = styled.div`
   height: 100%;
   background-position: bottom;
@@ -321,7 +310,6 @@ const BgImage = styled.div`
   left: 0;
   z-index: -1;
 `;
-
 const Info = styled.p`
   color: #000000;
   font-size: 16px;
@@ -331,15 +319,12 @@ const Info = styled.p`
   letter-spacing: 0.5px;
   line-height: 1.5;
 `;
-
-
 const CTA = styled.div `
 max-width:650px;
 width: 100%;
 display: flex;
 flex-direction: row;
 `;
-
 const RandomNumberInfo = styled.p`
     font-size: 14px;
     color: #003087;
@@ -354,5 +339,4 @@ const RandomNumberInfo = styled.p`
     user-select: none;
 
 `;
-
 export default ForgotPassword;
