@@ -63,8 +63,8 @@ const handlePassword = () => {
         }
     })
     .catch(error => {
-        console.error('Giriş hatası:', error);
-        setLoginStatus('Giriş başarısız! Lütfen bilgilerinizi kontrol edin.');
+        console.error('Bilgi Hatası:', error);
+        setLoginStatus('Sıfırlama başarısız! Lütfen bilgilerinizi kontrol edin.');
     });
 };
 

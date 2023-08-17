@@ -37,7 +37,7 @@ function App() {
               <Route exact path="/YetenekProgrami" element={<YetenekProgrami/>}/>
               <Route exact path= "/ForgotPassword" element = {<ForgotPassword/>}/>
               <Route exact path="/SignUp" element = {<SignUp isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />}/>
-              <Route exact path='/DetailedUser' element ={<DetailedUser isLoggedIn={isLoggedIn} />}/>
+              <Route exact path='/DetailedUser' element ={<DetailedUser  />}/>
           </Routes>
         </Router>
 
