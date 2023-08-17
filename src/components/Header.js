@@ -9,7 +9,6 @@ import { useUser } from "../context/UserContext";
 
 const Header = ({isLoggedIn}) => {
 
-const { tcKimlikNo } = useUser();
 const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
 const toggleDropdown = () => {
@@ -44,21 +43,23 @@ const [userInfo, setUserInfo] = useState({
         soyad: '',
         eposta: ''
 });
-
+const { tcKimlikNo } = useUser();
 const fetchUserInfo = () => {
-        axios.get(`http://localhost:8080/tcKimlikNo/${tcKimlikNo}`)
-          .then(response => {
-            const { ad, soyad, eposta } = response.data;
-            setUserInfo({
-              ad,
-              soyad,
-              eposta
-            });
-          })
-          .catch(error => {
-            console.error('Hata:', error);
+    if (tcKimlikNo) {
+      axios.get(`http://localhost:8080/tcKimlikNo/${tcKimlikNo}`)
+        .then(response => {
+          const { ad, soyad, eposta } = response.data;
+          setUserInfo({
+            ad,
+            soyad,
+            eposta
           });
-};
+        })
+        .catch(error => {
+          console.error('Hata:', error);
+        });
+    }
+  };
 
     return (
         <Nav>

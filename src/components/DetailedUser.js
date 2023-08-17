@@ -154,10 +154,10 @@ const handleUserBack = () => {
          <FixedIcon src="/images/a-yetenek.png"/>
             {detailStatus === "Deneyim Bilgileri"  ? (
               <Content>
-                <ParagrafIçerik>Bu bölümde birden fazla Proje, 
+                <İçerik>Bu bölümde birden fazla Proje, 
                   Staj ve Eğitim bilgisi ekleyebilirsiniz. 
                   Eklemek istediğiniz projeleri, staj bilgilerini ve eğitimleri
-                  ekle tuşuna basarak kaydettikten sonra Kariyer hedefinizi de doldurarak Kaydet ve İlerle seçeneği ile başvurunuzu tamamlayabilirsiniz !</ParagrafIçerik>
+                  ekle tuşuna basarak kaydettikten sonra Kariyer hedefinizi de doldurarak Kaydet ve İlerle seçeneği ile başvurunuzu tamamlayabilirsiniz !</İçerik>
       
                   <Info>Staj Bilgileri </Info>
           
@@ -655,7 +655,17 @@ const FixedIcon = styled.img`
     z-index: 10;
 `;
 const ParagrafIçerik= styled.p`
-color: #ff0000;
+color: #003087;
+text-align: left;
+font-size: 13px;
+margin-top:30px;
+margin-left: 25px;
+letter-spacing: 1px;
+line-height: 30px;
+text-indent:20px;
+`;
+const İçerik= styled.p`
+color: #003087;
 text-align: left;
 font-size: 13px;
 margin-top:30px;

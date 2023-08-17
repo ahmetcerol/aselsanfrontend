@@ -15,6 +15,7 @@ import ForgotPassword from './components/SifremiUnuttum';
 import SignUp from './components/KayıtOl';
 import KisiselVeriler from './components/kisiselVeriler';
 import DetailedUser from './components/DetailedUser';
+import { UserProvider, useUser } from './context/UserContext';
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
 
   return (
     <div className="App">
+      <UserProvider>
         <Router>
           <Header isLoggedIn={isLoggedIn} />
           <Routes>
@@ -40,6 +42,7 @@ function App() {
               <Route exact path='/DetailedUser' element ={<DetailedUser  />}/>
           </Routes>
         </Router>
+      </UserProvider>
 
     </div>
   );

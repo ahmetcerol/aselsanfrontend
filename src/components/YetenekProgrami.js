@@ -18,7 +18,7 @@ const YetenekProgrami = () => {
                     </Description>
                     <Title>Başvuru Aşamaları</Title>
                     <Description>
-                    Ana Sayfada bulunan a-Yetenek giriş butonuyla girip bilgilerini dolduran veya hesabı yok ise Hesap Oluştur butonu ile kayıt olup bilglerini dolduran ve ASELSAN 
+                    Ana Sayfada bulunan a-Yetenek giriş butonuyla girip bilgilerini dolduran veya hesabı yok ise Hesap Oluştur butonu ile kayıt olup bilgilerini dolduran ve ASELSAN 
                     işe alım kriterlerimizi sağlayan adaylar sürecimize dahil olabileceklerdir. Başvurular 13 Eylül Çarşamba günü gün sonuna kadar devam edecektir. a Yetenek Programı seçme ve yerleştirme sürecimiz Ağustos – Ekim 2023 arasında devam edecek olup, süreç aşamaları genel hatlarıyla şu şekildedir:
                     <br/><br/>
                     1. Aşama: Genel Yetenek Testi <br/>
