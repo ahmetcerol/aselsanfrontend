@@ -2,6 +2,8 @@ import { styled } from "styled-components";
 import { Navigate } from 'react-router-dom'; 
 import { useUser } from "../context/UserContext";
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
 
 
 
@@ -17,7 +19,9 @@ const handleTc = () => {
     navigate('/DetailedUser');
 };
   
-    
+  const handleDelete = () => {
+    axios.delete(`http://localhost:8080/person/${tcKimlikNo}`)
+  };  
 
     if (!isLoggedIn) {
         return <Navigate to="/SignIn" />;
@@ -68,7 +72,7 @@ const handleTc = () => {
                 </Section>
                 <Section>
                     <WelcomeContainer>
-                    <Welcome href="https://www.google.com/">Kişisel Verilerimi Sil !</Welcome>
+                    <Welcome onClick={handleDelete} href="/">Kişisel Verilerimi Sil !</Welcome>
                     <Welcome href="/">Reddediyorum (ASELSAN Ana Sayfaya Dönüş)</Welcome>
                     <Welcome onClick={handleTc}>Onaylıyor ve Kabul Ediyorum</Welcome>
                     </WelcomeContainer>

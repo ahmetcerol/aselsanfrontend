@@ -71,7 +71,7 @@ const[userStaj, setUserStaj] = useState([{
   stajBölümü:"",
   stajSüresi:"",
   stajYili: "",
-  stajTürü:"",
+  stajTürü:"Zorunlu",
 }]);
 const[userProje, setUserProje] = useState([{
   projeAdi:"",
@@ -112,6 +112,7 @@ const handleEgitim = () => {
 const handleStaj = () => {
   axios.post(`http://localhost:8080/${tcKimlik}/stajBilgileri`,userStaj)
   .then(response => {
+    setLoginStatus("");
     setStatusStaj("Başarıyla Staj Bilgileriniz Eklenmiştir.");
   }).catch(error => {
     console.error('Giriş hatası:',error);
