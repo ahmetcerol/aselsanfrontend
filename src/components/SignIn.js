@@ -87,6 +87,7 @@ const fetchRandomNumber = () => {
                     name="tcKimlikNo"
                     placeholder="T.C Kimlik Numarası"
                     value={user.tcKimlikNo}
+                    maxLength={11}
                     onChange={handleInputChange}
                 />
               

@@ -1,16 +1,20 @@
 import styled from "styled-components";
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useUser } from "../context/UserContext";
+import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom'; 
 
 
-const DetailedUser = ({tcKimlik}) => {
+
+const DetailedUser = ({tcKimlik, isLoggedIn, setIsLoggedIn}) => {
 
   const [loginStatus, setLoginStatus] = useState('');
+  const [statusStaj, setStatusStaj] = useState('');
+  const [statusProje, setStatusProje] = useState('');
+  const [statusEgitim, setStatusEgitim] = useState('');
   const [detailStatus, setDetailStatus]= useState('');
   const [selectedInterests, setSelectedInterests] = useState([]); 
-  console.error(tcKimlik);
-  const [tcKimlikNo, setTcKimlikNo] = useState(``);
+  const navigate = useNavigate(); 
 
 
 // Gerekli değişkenlerin değişmesi durumunda value nesnesine bunları atayarak post methodu yapılacak sırada ki bodyleri oluşturan methodlar
@@ -18,17 +22,20 @@ const handleInputChangeUser = (event) => {
     const { name, value } = event.target;
     setUser({ ...user, [name]: value });
 };
-const handleInputChangeProje = (event) => {
-      const { name, value } = event.target;
-      setUserProje({ ...userProje, [name]: value });
+const handleInputChangeProje = (index, field, value) => {
+  const updatedUserProje = [...userProje];
+  updatedUserProje[index][field] = value;
+  setUserProje(updatedUserProje);
 };
-const handleInputChangeStaj = (event) => {
-    const { name, value } = event.target;
-    setUserStaj({ ...userStaj, [name]: value });
+const handleInputChangeStaj = (index, field, value) => {
+  const updatedUserStaj = [...userStaj];
+  updatedUserStaj[index][field] = value;
+  setUserStaj(updatedUserStaj);
 };
-const handleInputChangeEgitim = (event) => {
-  const { name, value } = event.target;
-  setUserEgitimBilgileri({ ...userEgitimBilgileri, [name]: value });
+const handleInputChangeEgitim = (index, field, value)=> {
+  const updatedUserEgitim = [...userEgitimBilgileri];
+  updatedUserEgitim[index][field] = value;
+  setUserEgitimBilgileri(updatedUserEgitim);
 };
 const handleInputChangeKariyer = (event) => {
   const { name, value } = event.target;
@@ -50,28 +57,28 @@ const handleCheckboxChange = (event) => {
 
 // Gerekli değişkenleri tutar
 const [user, setUser] = useState({
-   gender:"",
+   gender: "Kadın",
    telephoneNumber:"",
    aktif:true,
 });
-const [userEgitimBilgileri, setUserEgitimBilgileri]= useState({
+const [userEgitimBilgileri, setUserEgitimBilgileri]= useState([{
   okulAdi:"",
   startDate:"",
   finishDate:""
-});
-const[userStaj, setUserStaj] = useState({
+}]);
+const[userStaj, setUserStaj] = useState([{
   stajYeri: "",
   stajBölümü:"",
   stajSüresi:"",
-  stajYili:"",
+  stajYili: "",
   stajTürü:"",
-});
-const[userProje, setUserProje] = useState({
+}]);
+const[userProje, setUserProje] = useState([{
   projeAdi:"",
   projeDeadlines:"",
   projeKurum:"",
   projeDetay:"",
-});
+}]);
 const[userKariyer, setUserKariyer] = useState({
   kariyerHedefim:""
 });
@@ -79,8 +86,8 @@ const[userKariyer, setUserKariyer] = useState({
 //Gerektiğinde gerekli değişkenleri bir üst yerden alarak post methodu yapan methodlar
 
 const handleUser = () => {
- 
-  axios.post(`http://localhost:8080/user/detailed/${tcKimlikNo}`, user)
+
+  axios.post(`http://localhost:8080/user/detailed/${tcKimlik}`, user)
       .then(response => {
         setLoginStatus(response.data);
         if(response.data === "Detaylı kullanıcı bilgileri kaydedildi.");
@@ -94,43 +101,44 @@ const handleUser = () => {
       
 };
 const handleEgitim = () => {
-  axios.post(`http://localhost:8080/${tcKimlikNo}/egitimBilgilerim`,userEgitimBilgileri)
+  axios.post(`http://localhost:8080/${tcKimlik}/egitimBilgilerim`,userEgitimBilgileri)
   .then(response =>{
-    setLoginStatus(response.data);
+    setStatusEgitim("Eğitim bilgisi başarıyla eklendi");
   }).catch(error =>{
     console.error('Hatalı bir işlem gerçekleştirdiniz', error);
-    setLoginStatus('Hatalı bir işlem yaptınız, lüften tekra deneyiniz!')
+    setStatusEgitim('Hatalı bir işlem yaptınız, lüften tekra deneyiniz!')
   })
 };
 const handleStaj = () => {
-  axios.post(`http://localhost:8080/${tcKimlikNo}/stajBilgileri`,userStaj)
+  axios.post(`http://localhost:8080/${tcKimlik}/stajBilgileri`,userStaj)
   .then(response => {
-    setLoginStatus(response.data);
+    setStatusStaj("Başarıyla Staj Bilgileriniz Eklenmiştir.");
   }).catch(error => {
     console.error('Giriş hatası:',error);
-    setLoginStatus("Hatalı bir işlem gerçekleştirdiniz lütfen tekrar deneyiniz !");
+    setStatusStaj("Hatalı bir işlem gerçekleştirdiniz lütfen tekrar deneyiniz !");
   })
 };
 const handleProje = () => {
-  axios.post(`http://localhost:8080/${tcKimlikNo}/projeDeneyimleri`,userProje)
+  axios.post(`http://localhost:8080/${tcKimlik}/projeDeneyimleri`,userProje)
   .then(response => {
-    setLoginStatus(response.data);
+    setStatusProje("Proje Deneyiminiz başarıyla eklenmiştir.");
   }).catch(error => {
     console.error('Giriş hatası:',error);
-    setLoginStatus("Hatalı bir işlem gerçekleştirdiniz lütfen tekrar deneyiniz !");
+    setStatusProje("Hatalı bir işlem gerçekleştirdiniz lütfen tekrar deneyiniz !");
   })
 };
 const handlekariyerHedeflerim = () => {
-  axios.post(`http://localhost:8080/${tcKimlikNo}/kariyerHedeflerim`,userKariyer)
+  axios.post(`http://localhost:8080/${tcKimlik}/kariyerHedeflerim`,userKariyer)
   .then(response => {
     setLoginStatus(response.data);
+    setIsLoggedIn(true);
   }).catch(error => {
     console.error('Giriş hatası:',error);
     setLoginStatus("Hatalı bir işlem gerçekleştirdiniz lütfen tekrar deneyiniz !");
   })
 };
 const sendInterestsToDatabase = () => {
-  axios.post(`http://localhost:8080/${tcKimlikNo}/adresler`, selectedInterests) // Axios ile POST isteği gönderiyoruz
+  axios.post(`http://localhost:8080/${tcKimlik}/adresler`, selectedInterests) // Axios ile POST isteği gönderiyoruz
     .then(response => {
       console.log("Veritabanına gönderildi:", response.data);
       // Gerekirse veritabanına gönderildiğini kullanıcıya bildirebilirsiniz
@@ -143,12 +151,19 @@ const handleUserAndSendInterests = () => {
   handleUser(); // İlk fonksiyonu çağır
   sendInterestsToDatabase(); // İkinci fonksiyonu çağır
 };
+const handleUserKariyerAndNavigateSuccesfull = () => {
+  handlekariyerHedeflerim();
+  navigate("/Succesfull");
+};
 
 //Kullanıcı geriye gitmek isterse çalışacak method
 const handleUserBack = () => {
   setDetailStatus("") 
 };
 
+if (!isLoggedIn) {
+  return <Navigate to="/SignIn" />;
+}
 
 
     return (
@@ -161,68 +176,67 @@ const handleUserBack = () => {
                   Eklemek istediğiniz projeleri, staj bilgilerini ve eğitimleri
                   ekle tuşuna basarak kaydettikten sonra Kariyer hedefinizi de doldurarak Kaydet ve İlerle seçeneği ile başvurunuzu tamamlayabilirsiniz !</İçerik>
       
+            
                   <Info>Staj Bilgileri </Info>
-          
+            {userStaj.map((staj, index) => (
                     <CTA>
                 
                 <FormElements>
                       <StajInfo>Staj Yeri</StajInfo>
                       <StajInfo>Staj Bölümü</StajInfo> 
                       <StajInfo>Staj Süresi</StajInfo>
-                      <StajInfo>Staj Yapılan Yıl</StajInfo>
+                      <StajInfo>Staj Başlangıç Tarihi</StajInfo>
                       <StajInfo>Staj Türü</StajInfo>
                 </FormElements>
                 
-                <FormElements>
+                <FormElements key={index}>
                
                   
                       <InputText
                   type="text"
                   name="stajYeri"
                   placeholder="Staj Yeri"
-                  maxLength={11}
-                  value={userStaj.stajYeri}
-                  onChange={handleInputChangeStaj} 
+                  value={staj.stajYeri}
+                  onChange={(e) => handleInputChangeStaj(index, "stajYeri", e.target.value)}
               />
                 <InputText
                   type="text"
                   name="stajBölümü"
                   placeholder="Staj Bölümü"
-                  maxLength={11} 
-                  value={userStaj.stajBölümü}
-                  onChange={handleInputChangeStaj}
+                  value={staj.stajBölümü}
+                  onChange={(e) => handleInputChangeStaj(index, "stajBölümü", e.target.value)}
               />
                 <InputText
-                  type="number"
+                  type="text"
                   name="stajSüresi"
                   placeholder="Staj Süresi"
                   maxLength={11}
-                  value={userStaj.stajSüresi}
-                  onChange={handleInputChangeStaj}
+                  value={staj.stajSüresi}
+                  onChange={(e) => handleInputChangeStaj(index, "stajSüresi", e.target.value)}
 
 
               />
-               <InputText type="date" 
-              name="stajYili" 
-              
-              value={userStaj.stajYili}
-              onChange={userStaj.handleInputChangeStaj}/>
+               <InputText 
+               type="date" 
+              name="stajYili"
+              value={staj.stajYili}
+              onChange={(e) => handleInputChangeStaj(index, "stajYili", e.target.value)}/>
                <Saelect
                   name="stajTürü"
-                  value={userStaj.stajTürü}
-                  onChange={handleInputChangeStaj}>
+                  value={staj.stajTürü}
+                  on  onChange={(e) => handleInputChangeStaj(index, "stajTürü", e.target.value)}>
                               <option value={"Zorunlu"}>Zorunlu</option>
                               <option value={"Gönüllü"}>Gönüllü</option>
                       </Saelect>
-
+                      <LoginStatus>{statusStaj}</LoginStatus> 
                       <Ekle onClick={handleStaj}><span>Ekle !</span></Ekle>
 
 
               </FormElements>
-                    </CTA>
+                    </CTA> ))}
         
                   <Info2>Proje Bilgileri </Info2>
-          
+                  {userProje.map((proje, index) => (
                     <CTA>
                 
                 <FormElements>
@@ -239,43 +253,43 @@ const handleUserBack = () => {
                   type="text"
                   name="projeAdi"
                   placeholder="Proje Adı"
-                  value={userProje.projeAdi}
-                  onChange={handleInputChangeProje}
+                  value={proje.projeAdi}
+                  onChange={(e) => handleInputChangeProje(index, "projeAdi", e.target.value)}
                   
               />
                 <InputText
                   type="text"
                   name="projeKurum"
                   placeholder="Proje Kurumu"
-                  value={userProje.projeKurum}
-                  onChange={handleInputChangeProje}
+                  value={proje.projeKurum}
+                  onChange={(e) => handleInputChangeProje(index, "projeKurum", e.target.value)}
                   
               />
                 <InputText
                   type="text"
                   name="projeDeadlines"
                   placeholder="Proje Süresi"
-                  value={userProje.projeDeadlines}
-                  onChange={handleInputChangeProje}
+                  value={proje.projeDeadlines}
+                  onChange={(e) => handleInputChangeProje(index, "projeDeadlines", e.target.value)}
                  
               />
               <TextArea
                   name="projeDetay"
                   placeholder="Proje Detay"
-                  value={userProje.projeDetay}
-                  onChange={handleInputChangeProje}
+                  value={proje.projeDetay}
+                  onChange={(e) => handleInputChangeProje(index, "projeDetay", e.target.value)}
               />
               
-
+              <LoginStatus>{statusProje}</LoginStatus> 
               <Ekle onClick={handleProje}><span>Ekle !</span></Ekle>
 
                
 
               </FormElements>
-                    </CTA>
+                    </CTA>))}
 
                   <Info2>Eğitim Bilgileri </Info2>
-          
+                  {userEgitimBilgileri.map((egitimBilgilerim, index) => (
                     <CTA>
                 
                 <FormElements>
@@ -291,28 +305,28 @@ const handleUserBack = () => {
                   type="text"
                   name="okulAdi"
                   placeholder="Okul Adı"
-                  value={userEgitimBilgileri.okulAdi}
-                  onChange={handleInputChangeEgitim}
+                  value={egitimBilgilerim.okulAdi}
+                  onChange={(e) => handleInputChangeEgitim(index, "okulAdi", e.target.value)}
                   
               />
                <InputText type="date" 
               name="startDate" 
-              value={userEgitimBilgileri.startDate}
-              onChange={handleInputChangeEgitim}/>
+              value={egitimBilgilerim.startDate}
+              onChange={(e) => handleInputChangeEgitim(index, "startDate", e.target.value)}/>
 
                <InputText type="date" 
               name="finishDate" 
-              value={userEgitimBilgileri.birthDate}
-              onChange={handleInputChangeEgitim}/>
+              value={egitimBilgilerim.birthDate}
+              onChange={(e) => handleInputChangeEgitim(index, "finishDate", e.target.value)}/>
                
               
-
+               <LoginStatus>{statusEgitim}</LoginStatus> 
               <Ekle onClick={handleEgitim}><span>Ekle !</span></Ekle>
 
                
 
               </FormElements>
-                    </CTA>
+                    </CTA>))}
               
                   <Info2>Kariyer Hedeflerim </Info2>
                     
@@ -330,7 +344,7 @@ const handleUserBack = () => {
                 <RowElements>
                        
                        <StyledA onClick={handleUserBack}><span>Geri Git </span></StyledA>
-                       <StyledA onClick={handlekariyerHedeflerim}><span>Kaydet ve İlerle</span></StyledA>
+                       <StyledA onClick={handleUserKariyerAndNavigateSuccesfull}><span>Kaydet ve İlerle</span></StyledA>
                </RowElements>
                      <LoginStatus>{loginStatus}</LoginStatus> 
                 </FormElements>
@@ -503,7 +517,7 @@ const handleUserBack = () => {
                       <StyledA href="/"><span>Çıkış Yapmak İstiyorum !</span></StyledA>
                       <StyledA onClick={handleUserAndSendInterests}><span>Kaydet ve İlerle</span></StyledA>
                 </RowElements>
-
+                        
                       <LoginStatus>{loginStatus}</LoginStatus> 
                 </FormElements>
                     </CTA>

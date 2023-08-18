@@ -13,10 +13,8 @@ const navigate = useNavigate();
 
 const handleTc = () => {
     setTcKimlik(tcKimlikNo);
-    console.error(tcKimlik);
     setIsLoggedIn(true);
     navigate('/DetailedUser');
-    
 };
   
     

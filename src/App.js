@@ -16,6 +16,7 @@ import SignUp from './components/KayıtOl';
 import KisiselVeriler from './components/kisiselVeriler';
 import DetailedUser from './components/DetailedUser';
 import { UserProvider } from './context/UserContext';
+import Succesfull from './components/Succesfull';
 
 function App() {
 
@@ -42,6 +43,7 @@ function App() {
               <Route exact path= "/ForgotPassword" element = {<ForgotPassword/>}/>
               <Route exact path="/SignUp" element = {<SignUp isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />}/>
               <Route exact path='/DetailedUser' element ={<DetailedUser  isLoggedIn={isLoggedIn} tcKimlik= {tcKimlik} />}/>
+              <Route exact path='/Succesfull' element ={<Succesfull isLoggedIn={isLoggedIn}/>}/>
           </Routes>
         </Router>
     </div>

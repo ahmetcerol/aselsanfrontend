@@ -19,7 +19,7 @@ const toggleDropdown = () => {
 bir tıklamayı dinlememesini sağlayabiliriz.*/
 
  const dropdownRef = useRef(null);
-
+ const { tcKimlikNo } = useUser();
 useEffect(() => {
         fetchUserInfo();
         const handleOutsideClick = (event) => {
@@ -36,14 +36,13 @@ useEffect(() => {
           window.removeEventListener("click", handleOutsideClick);
         };
         
-});
+},[tcKimlikNo]);
 
 const [userInfo, setUserInfo] = useState({
         ad: '',
         soyad: '',
         eposta: ''
 });
-const { tcKimlikNo } = useUser();
 const fetchUserInfo = () => {
     if (tcKimlikNo) {
       axios.get(`http://localhost:8080/tcKimlikNo/${tcKimlikNo}`)

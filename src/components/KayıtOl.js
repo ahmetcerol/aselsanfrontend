@@ -57,7 +57,7 @@ const SignUp = ({ isLoggedIn, setIsLoggedIn }) => {
          if(response.status ===200){
           setLoginStatus(response.data);
          setIsLoggedIn(true);
-         navigate('/veri');
+         navigate('/SignIn');
          }
         })
         .catch((error) => {

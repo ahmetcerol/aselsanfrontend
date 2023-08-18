@@ -15,6 +15,5 @@ export function UserProvider({ children }) {
 
 export function useUser() {
   const { tcKimlikNo } = useContext(UserContext);
-  console.error(tcKimlikNo);
   return useContext(UserContext);
 }
