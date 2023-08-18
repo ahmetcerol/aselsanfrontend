@@ -52,6 +52,7 @@ const CTA = styled.div`
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     width: 50%;
     margin-top:100px;
+    margin-bottom: 50px;
     position: relative;
     overflow: hidden;
 `;
