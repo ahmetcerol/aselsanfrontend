@@ -36,7 +36,7 @@ useEffect(() => {
           window.removeEventListener("click", handleOutsideClick);
         };
         
-}, []);
+});
 
 const [userInfo, setUserInfo] = useState({
         ad: '',
@@ -63,10 +63,10 @@ const fetchUserInfo = () => {
 
     return (
         <Nav>
-            <Logo>
-                <a href="/">
+               <Logo>
+                
                 <img src = "/images/a-yetenek.png" alt="ASELSAN" />
-                </a>
+            
             </Logo>
             {isLoggedIn && ( // Eğer kullanıcı giriş yapmışsa
                 <NavMenu>
@@ -76,7 +76,14 @@ const fetchUserInfo = () => {
                  </Cta>
                 </NavMenu>)}
             {!isLoggedIn && ( // Eğer kullanıcı giriş yapmamışsa 
+                <Nav>
+                    <Logo>
+                <a href="/">
+                <img src = "/images/a-yetenek.png" alt="ASELSAN" />
+                </a>
+            </Logo>
                 <NavMenu>
+                   
             <a href="/YetenekProgrami">
                     <span >{HeaderKeys.kimlerBaşvurmalı}</span>
                 </a>
@@ -102,7 +109,8 @@ const fetchUserInfo = () => {
 
                 
                 </DropdownToggle>
-                </NavMenu>)}
+                </NavMenu>
+                </Nav>)}
         </Nav>);
         
 }
@@ -240,21 +248,21 @@ const Profile = styled.p`
         color:#090382;
         font-size: 12px;
         letter-spacing: 1.42px;
-        line-height: 1.08;
         padding: 2px 0px;
-        white-space: nowrap;
         position: relative;
         font-weight: 700;
+        margin-bottom: 0;
+
 `;
 const Email = styled.p`
         color:#090382;
         font-size: 8px;
         letter-spacing: 1.42px;
-        line-height: 1.08;
-        padding: 2px 0px;
-        white-space: nowrap;
         position: relative;
         font-weight: 700;
+        margin-top: 0px;
+        padding: 2px 0px;
+
 `;
 
 export default Header;

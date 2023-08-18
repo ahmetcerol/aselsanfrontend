@@ -1,7 +1,25 @@
 import { styled } from "styled-components";
 import { Navigate } from 'react-router-dom'; 
+import { useUser } from "../context/UserContext";
+import { useNavigate } from 'react-router-dom';
 
-const KisiselVeriler =  ({ isLoggedIn }) => {
+
+
+const KisiselVeriler =  ({ isLoggedIn, tcKimlik, setTcKimlik, setIsLoggedIn }) => {
+   
+const {tcKimlikNo} = useUser();
+const navigate = useNavigate();
+
+
+const handleTc = () => {
+    setTcKimlik(tcKimlikNo);
+    console.error(tcKimlik);
+    setIsLoggedIn(true);
+    navigate('/DetailedUser');
+    
+};
+  
+    
 
     if (!isLoggedIn) {
         return <Navigate to="/SignIn" />;
@@ -54,7 +72,7 @@ const KisiselVeriler =  ({ isLoggedIn }) => {
                     <WelcomeContainer>
                     <Welcome href="https://www.google.com/">Kişisel Verilerimi Sil !</Welcome>
                     <Welcome href="/">Reddediyorum (ASELSAN Ana Sayfaya Dönüş)</Welcome>
-                    <Welcome href="/DetailedUser">Onaylıyor ve Kabul Ediyorum</Welcome>
+                    <Welcome onClick={handleTc}>Onaylıyor ve Kabul Ediyorum</Welcome>
                     </WelcomeContainer>
                 </Section>
                 <FixedIcon src="/images/ASELSAN_logo.svg"/>

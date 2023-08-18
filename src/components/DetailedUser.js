@@ -4,12 +4,14 @@ import axios from 'axios';
 import { useUser } from "../context/UserContext";
 
 
-const DetailedUser = () => {
+const DetailedUser = ({tcKimlik}) => {
 
-  const { tcKimlikNo } = useUser();
   const [loginStatus, setLoginStatus] = useState('');
   const [detailStatus, setDetailStatus]= useState('');
   const [selectedInterests, setSelectedInterests] = useState([]); 
+  console.error(tcKimlik);
+  const [tcKimlikNo, setTcKimlikNo] = useState(``);
+
 
 // Gerekli değişkenlerin değişmesi durumunda value nesnesine bunları atayarak post methodu yapılacak sırada ki bodyleri oluşturan methodlar
 const handleInputChangeUser = (event) => {

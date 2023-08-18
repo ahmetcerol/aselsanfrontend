@@ -5,7 +5,7 @@ const UserContext = createContext();
 
 export function UserProvider({ children }) {
   const [tcKimlikNo, setTcKimlikNo] = useState('');
-
+  
   return (
     <UserContext.Provider value={{ tcKimlikNo, setTcKimlikNo }}>
       {children}
@@ -14,5 +14,7 @@ export function UserProvider({ children }) {
 }
 
 export function useUser() {
+  const { tcKimlikNo } = useContext(UserContext);
+  console.error(tcKimlikNo);
   return useContext(UserContext);
 }

@@ -15,22 +15,24 @@ import ForgotPassword from './components/SifremiUnuttum';
 import SignUp from './components/KayıtOl';
 import KisiselVeriler from './components/kisiselVeriler';
 import DetailedUser from './components/DetailedUser';
-import { UserProvider, useUser } from './context/UserContext';
+import { UserProvider } from './context/UserContext';
 
 function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [tcKimlik ,setTcKimlik] = useState("");
   
 
   return (
+  
+  <UserProvider>
     <div className="App">
-      <UserProvider>
         <Router>
           <Header isLoggedIn={isLoggedIn} />
           <Routes>
-              <Route exact path ="/veri" element = {<KisiselVeriler isLoggedIn={isLoggedIn} />}/>
+              <Route exact path ="/veri" element = {<KisiselVeriler isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} tcKimlik= {tcKimlik} setTcKimlik={setTcKimlik}/>}/>
               <Route exact path= "/" element = {<Login/>}/>
-              <Route exact path="/SignIn" element = {<SignIn isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />}/>
+              <Route exact path="/SignIn" element = {<SignIn isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}  />}/>
               <Route exact path="/AselsanKültür" element= {<AselsanKültür/>}/>
               <Route exact path="/SiziNelerBekliyor" element = {<SiziNelerBekliyor/>}/>
               <Route exact path="/Olanaklar" element={<Olanaklar/>}/>
@@ -39,12 +41,12 @@ function App() {
               <Route exact path="/YetenekProgrami" element={<YetenekProgrami/>}/>
               <Route exact path= "/ForgotPassword" element = {<ForgotPassword/>}/>
               <Route exact path="/SignUp" element = {<SignUp isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />}/>
-              <Route exact path='/DetailedUser' element ={<DetailedUser  />}/>
+              <Route exact path='/DetailedUser' element ={<DetailedUser  isLoggedIn={isLoggedIn} tcKimlik= {tcKimlik} />}/>
           </Routes>
         </Router>
-      </UserProvider>
-
     </div>
+  </UserProvider>
+
   );
 }
 
