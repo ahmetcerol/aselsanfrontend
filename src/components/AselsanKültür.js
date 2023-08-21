@@ -5,7 +5,7 @@ import aselsanKültürKey from "../keys/AselsanKültürKey";
 const AselsanKültür = (props) => {
     return (
         <Container>
-            <BgImage />
+           
             <Content>
                 <CTA>
                     <PageTitle>{aselsanKültürKey.pageTitle}</PageTitle>
@@ -13,14 +13,13 @@ const AselsanKültür = (props) => {
                 </CTA>
                 <FixedIcon src="/images/aselsan-logo.png" alt="Aselsan Logo" />
             </Content>
+            <BgImage />
         </Container>
     );
 }
 
 const Container = styled.section`
-overflow: hidden;
-display: flex;
-flex-direction: column;
+
 `;
 
 const BgImage = styled.div`
@@ -37,12 +36,11 @@ const BgImage = styled.div`
 `;
 
 const Content = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     width: 80%;
+    max-width: 1200px;
+    padding: 40px;
+
     margin: 0 auto;
-    z-index: 1;
 `;
 
 const CTA = styled.div`

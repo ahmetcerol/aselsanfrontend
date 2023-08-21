@@ -17,6 +17,7 @@ import KisiselVeriler from './components/kisiselVeriler';
 import DetailedUser from './components/DetailedUser';
 import { UserProvider } from './context/UserContext';
 import Succesfull from './components/Succesfull';
+import Footer from './components/Footer';
 
 function App() {
 
@@ -45,6 +46,7 @@ function App() {
               <Route exact path='/DetailedUser' element ={<DetailedUser  isLoggedIn={isLoggedIn} tcKimlik= {tcKimlik} />}/>
               <Route exact path='/Succesfull' element ={<Succesfull isLoggedIn={isLoggedIn}/>}/>
           </Routes>
+          <Footer/>
         </Router>
     </div>
   </UserProvider>
