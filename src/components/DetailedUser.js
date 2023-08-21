@@ -133,6 +133,7 @@ const handlekariyerHedeflerim = () => {
   .then(response => {
     setLoginStatus(response.data);
     setIsLoggedIn(true);
+    window.scroll(0, 0);
   }).catch(error => {
     console.error('Giriş hatası:',error);
     setLoginStatus("Hatalı bir işlem gerçekleştirdiniz lütfen tekrar deneyiniz !");
