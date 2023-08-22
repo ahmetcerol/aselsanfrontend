@@ -12,7 +12,8 @@ const SignIn = ({ isLoggedIn, setIsLoggedIn }) => {
   const [error, setError] = useState(null);
   const [randomNumber, setRandomNumber] = useState(null);
   const [loginStatus, setLoginStatus] = useState('');
-  const {setTcKimlikNo} = useUser();
+  const {tcKimlikNo,setTcKimlikNo} = useUser();
+  const [password, setPassword] = useState();
 
   const [user, setUser] = useState({
     nationality: 'Türkiye Cumhuriyeti',
@@ -23,17 +24,40 @@ const SignIn = ({ isLoggedIn, setIsLoggedIn }) => {
 const handleInputChange = (event) => {
     const { name, value } = event.target;
     setUser({ ...user, [name]: value });
+    setTcKimlikNo(user.tcKimlikNo);
+    setPassword(user.password);
 };
+const handleAdmin = () => {
+
+  if(tcKimlikNo === "admin" && password === "admin") {
+    setIsLoggedIn(true);
+    navigate("/AdminPage");
+  }else {
+    handleLogin();
+  }
+
+}
+const handleDurum = () => {
+  axios.get(`http://localhost:8080/isUserActive/${tcKimlikNo}`)
+  .then(response => {
+    if(response.data === true){
+      setIsLoggedIn(true);
+      navigate('/BaşvuruDurum');
+    }
+    else{navigate('/veri');}
+  }).catch(error => {
+    console.error("Aktiflik kontrolü yapılamadı",error);
+  })
+}
+
 const handleLogin = () => {
   axios.post('http://localhost:8080/login', user)
     .then(response => {
         setLoginStatus(response.data); // API'den dönen veriyi duruma kaydediyoruz
         if (response.data === "Giriş başarılı!") {
-          // Giriş başarılı ise, diğer sayfaya yönlendirebilirsiniz
+          // Giriş başarılı ise, diğer sayfaya yönlendir
           setIsLoggedIn(true);
-          setTcKimlikNo(user.tcKimlikNo);
-          navigate('/veri');
-
+          handleDurum();
         }
     })
     .catch(error => {
@@ -56,7 +80,7 @@ const fetchRandomNumber = () => {
 };
 
  useEffect(() => {
-  fetchRandomNumber(); // İlk çağrı
+  fetchRandomNumber(); 
   }, []);
 
     return (
@@ -125,7 +149,7 @@ const fetchRandomNumber = () => {
                           <StyledA href="/ForgotPassword"><span>Şifremi Unuttum</span></StyledA>
                           <StyledA href="/SignUp"><span>Yeni Kayıt</span></StyledA>
                         </RowElements>
-                        <Welcome onClick={handleLogin} > Giriş Yap</Welcome>
+                        <Welcome onClick={handleAdmin} > Giriş Yap</Welcome>
                         <LoginStatus>{loginStatus}</LoginStatus> 
 
                   </FormElements>

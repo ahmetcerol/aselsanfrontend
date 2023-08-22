@@ -143,6 +143,8 @@ padding: 12.5px 0;
 border: 1px solid transparent;
 border-radius: 100px;
 text-align: center;
+    user-select: none;
+
 
 &:hover {
     background-color: #3d78c4;
