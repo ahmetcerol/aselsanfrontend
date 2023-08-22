@@ -53,10 +53,11 @@ const SignUp = ({ isLoggedIn, setIsLoggedIn }) => {
   const handleInputChange = (event) => {
       const { name, value } = event.target;
       setFormData({ ...formData, [name]: value });
-  };
+      setTcKimlik(formData.tcKimlikNo);
+      setNewPassword(formData.password);
 
+  };
   const handleUpdatePassword = () => {
-    setNewPassword(formData.password);
     if (newPassword !== confirmNewPassword) {
       setLoginStatus('Yeni şifreler uyuşmuyor.');
       return;
@@ -66,20 +67,21 @@ const SignUp = ({ isLoggedIn, setIsLoggedIn }) => {
     }
   }
 
-  const handleCheckAndSubmit = async () => {
-    setTcKimlik(formData.tcKimlikNo);
-    try {
-      const response = await axios.get(`http://localhost:8080/${tcKimlik}`);
-      setResult(response.data);
-      if (response.data === "T.C. Kimlik Numarası doğrulandı") {
-        handleSubmit();
-      } else {
-        setLoginStatus("T.C. Kimlik Numarası doğrulanamadı. Kayıt başarısız!");
-      }
-    } catch (error) {
-      console.error(error);
-      setLoginStatus("T.C. Kimlik Numarası doğrulaması sırasında bir hata oluştu.");
-    }
+    
+
+  const handleCheckAndSubmit =  () => {
+    console.error(tcKimlik);
+      axios.get(`http://localhost:8080/${tcKimlik}`).then((response) => {
+        setResult(response.data);
+        if (response.data === "T.C. Kimlik Numarası doğrulandı") {
+          handleSubmit();
+        } else {
+          setLoginStatus("T.C. Kimlik Numarası doğrulanamadı. Kayıt başarısız!");
+        }
+      }).catch((error) => { console.error(error);
+        setLoginStatus("T.C. Kimlik Numarası doğrulaması sırasında bir hata oluştu.");});
+    
+     
   };
 
   const handleSubmit = () => {
@@ -196,7 +198,7 @@ const SignUp = ({ isLoggedIn, setIsLoggedIn }) => {
         )}
       </div>)}
          
-        
+       
           <Welcome onClick={handleUpdatePassword}>Kayıt Ol</Welcome>
           <LoginStatus>{loginStatus}</LoginStatus> 
         </Form>
@@ -341,7 +343,7 @@ border: 1px solid transparent;
 text-align:center;
 font-weight: 700;
 margin-right: 23px;
-margin-top: 20px;
+margin-top: 10px;
 
 display:flex;
 
@@ -378,7 +380,6 @@ const RandomNumberInfo = styled.p`
     font-size: 14px;
     color: #003087;
     font-weight: 700;
-    position: fixed;
     margin-left: 520px;
     width: 100px;
     height: auto;
@@ -389,7 +390,7 @@ const RandomNumberInfo = styled.p`
     margin-top:0;
     text-align:center;
     user-select: none;
-
+    position: sticky;
 `;
 const LoginStatus = styled.p`
     margin-top: 15px;
