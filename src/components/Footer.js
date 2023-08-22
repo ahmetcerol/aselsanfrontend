@@ -45,6 +45,8 @@ const FooterContainer = styled.footer`
   align-items: flex-start; /* Align icons to top right */
 `;
 
+
+
 const FooterLeft = styled.div`
   display: flex;
   align-items: center;

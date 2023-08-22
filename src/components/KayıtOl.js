@@ -16,6 +16,11 @@ const SignUp = ({ isLoggedIn, setIsLoggedIn }) => {
   const [loginStatus, setLoginStatus] = useState('');
   const navigate = useNavigate(); 
   const [randomNumber, setRandomNumber] = useState(null);
+  const [tcKimlik, setTcKimlik] = useState('');
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
+
+  const [result, setResult] = useState('');
   
   const fetchRandomNumber = () => {
     axios.get('http://localhost:8080/api/generateRandomString')
@@ -50,14 +55,42 @@ const SignUp = ({ isLoggedIn, setIsLoggedIn }) => {
       setFormData({ ...formData, [name]: value });
   };
 
+  const handleUpdatePassword = () => {
+    setNewPassword(formData.password);
+    if (newPassword !== confirmNewPassword) {
+      setLoginStatus('Yeni şifreler uyuşmuyor.');
+      return;
+    }
+    else {
+      handleCheckAndSubmit();
+    }
+  }
+
+  const handleCheckAndSubmit = async () => {
+    setTcKimlik(formData.tcKimlikNo);
+    try {
+      const response = await axios.get(`http://localhost:8080/${tcKimlik}`);
+      setResult(response.data);
+      if (response.data === "T.C. Kimlik Numarası doğrulandı") {
+        handleSubmit();
+      } else {
+        setLoginStatus("T.C. Kimlik Numarası doğrulanamadı. Kayıt başarısız!");
+      }
+    } catch (error) {
+      console.error(error);
+      setLoginStatus("T.C. Kimlik Numarası doğrulaması sırasında bir hata oluştu.");
+    }
+  };
 
   const handleSubmit = () => {
       axios.post("http://localhost:8080/api/kisi", formData)
         .then((response) => {
          if(response.status ===200){
-          setLoginStatus(response.data);
+         setLoginStatus("Başarılı bir şekilde kayıt oldunuz. Giriş sayfasına yönlendiriliyorsunuz...");
          setIsLoggedIn(true);
-         navigate('/SignIn');
+         setTimeout(() => {
+            navigate('/SignIn');
+        }, 5000);
          }
         })
         .catch((error) => {
@@ -138,7 +171,10 @@ const SignUp = ({ isLoggedIn, setIsLoggedIn }) => {
             </FormElement>
             <FormElement>
               <FormElementLabel>Şifre Tekrarı</FormElementLabel>
-              <InputText type="password" name="passwordConfirmation" placeholder=" Tekrar "/>
+              <InputText type="password" 
+              name="passwordConfirmation" 
+              placeholder=" Tekrar "
+              onChange={(e) => setConfirmNewPassword(e.target.value)}/>
             </FormElement>
             <FormElement>
             <FormElementLabel>Doğrulama Kodu</FormElementLabel>
@@ -161,7 +197,7 @@ const SignUp = ({ isLoggedIn, setIsLoggedIn }) => {
       </div>)}
          
         
-          <Welcome onClick={handleSubmit}>Kayıt Ol</Welcome>
+          <Welcome onClick={handleUpdatePassword}>Kayıt Ol</Welcome>
           <LoginStatus>{loginStatus}</LoginStatus> 
         </Form>
         <StyledA href="/SignIn"><span>Hesabın var mı ? Giriş Yap!</span></StyledA>

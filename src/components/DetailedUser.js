@@ -140,10 +140,9 @@ const handlekariyerHedeflerim = () => {
   })
 };
 const sendInterestsToDatabase = () => {
-  axios.post(`http://localhost:8080/${tcKimlik}/adresler`, selectedInterests) // Axios ile POST isteği gönderiyoruz
+  axios.post(`http://localhost:8080/${tcKimlik}/adresler`, selectedInterests) 
     .then(response => {
       console.log("Veritabanına gönderildi:", response.data);
-      // Gerekirse veritabanına gönderildiğini kullanıcıya bildirebilirsiniz
     })
     .catch(error => {
       console.error("Hata oluştu:", error);
@@ -168,7 +167,7 @@ if (!isLoggedIn) {
 }
 
 
-    return (
+  return (
       <Container>
          <FixedIcon src="/images/a-yetenek.png"/>
             {detailStatus === "Deneyim Bilgileri"  ? (

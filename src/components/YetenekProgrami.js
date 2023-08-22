@@ -8,14 +8,21 @@ const YetenekProgrami = () => {
                 <Section>
                     <Title>a Yetenek Programı</Title>
                     <Description>
-                        Genç yeteneklerin iş hayatına başlamadan önce mesleki yeterlilik ve yetkinlikler açısından kendilerini geliştirmeleri ve ASELSAN kültürünü tanıyarak çalışma hayatına adım atmalarını amaçlayan ve mentorlük çalışmalarıyla adayların kariyer gelişimlerini destekleyen bir yetenek programıdır.
+                        Genç yeteneklerin iş hayatına başlamadan önce mesleki yeterlilik ve yetkinlikler açısından kendilerini geliştirmeleri ve 
+                        ASELSAN kültürünü tanıyarak çalışma hayatına adım atmalarını amaçlayan ve mentorlük çalışmalarıyla adayların 
+                        kariyer gelişimlerini destekleyen bir yetenek programıdır. Bu proje sayesinde hayata geçen çoğu Aselsan projesini yakından tanıma, alanında üst düzey mühendisler ile beraber çalışabilme şansı yakalayacak olan Aday Mühendislerimiz, alanlarında gösterdikleri başarılar ile beraber Aselsan şirketinde çalışabilme şansı yakalayacaklardır. 
                     </Description>
                 </Section>
                 <Section>
                     <Title>Programa Kimler Katılabilir?</Title>
                     <Description>
-                        Yurt içi üniversitelerin Mühendislik, Fen-Edebiyat ve İktisadi ve İdari Bilimler örgün lisans programlarında son sınıf öğrencisi olan tüm adaylar programa başvurabilir.
+                        Yurt içi üniversitelerin Mühendislik, Fen-Edebiyat ve İktisadi ve İdari Bilimler örgün lisans programlarında son sınıf öğrencisi olanlar, artı olarak da Aselsan web sitesinde bulunan gerekli işe alım kriterlerini sağlayan adaylar başvurabileceklerdir. Kriterlerimize ulaşabilmek için; 
+
                     </Description>
+                    <a href="https://www.aselsan.com/tr/kariyer/ise-alim-surecimiz">
+                    <DescriptionLink>
+                        Aselsan İşe Alım Kriterleri
+                    </DescriptionLink></a>
                     <Title>Başvuru Aşamaları</Title>
                     <Description>
                     Ana Sayfada bulunan a-Yetenek giriş butonuyla girip bilgilerini dolduran veya hesabı yok ise Hesap Oluştur butonu ile kayıt olup bilgilerini dolduran ve ASELSAN 
@@ -64,6 +71,16 @@ const Description = styled.p`
     line-height: 1.5;
     color: #333;
     text-indent:20px;
+`;
+const DescriptionLink = styled.p`
+font-size: 16px;
+color: #003087;
+text-decoration: underline;
+transition: color 0.3s ease-in-out;
+
+&:hover {
+    color: #0258f7;
+};
 `;
 const FixedIcon = styled.img`
     position: fixed;
