@@ -1,34 +1,56 @@
 import { styled } from "styled-components";
-import { Navigate } from 'react-router-dom'; 
-import { useUser } from "../context/UserContext";
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-
+import { Navigate } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 
 
 const BaşvuruDurumEkrani =  ({tcKimlik, isLoggedIn}) => {
-    
+    const [applicationStatus, setApplicationStatus] = useState({ isApproved: null });
+
+    const fetchApplicationStatus = async () => {
+        try {
+            const response = await axios.get(`http://localhost:8080/approve/${tcKimlik}`);
+            setApplicationStatus(response.data);
+            console.error(response.data);
+        } catch (error) {
+            console.error("Başvuru durumu çekme hatası:", error);
+        }
+    };
+    useEffect(() => {
+        fetchApplicationStatus();
+    }, []);
+
     if (!isLoggedIn) {
         return <Navigate to="/SignIn" />;
     }
+
+    const getStatusText = () => {
+        if (applicationStatus.approved === null) {
+            return "Başvurunuz henüz değerlendirme aşamasındadır. Her bilginizi dikkatli bir şekilde incelediğimizi bilmenizi isteriz. En kısa sürede sizlere geri dönüş yapacağız.";
+        } else if (applicationStatus.approved === true) {
+            return "Başvurunuz onaylanmıştır. En kısa sürede sizlere yapmanız gereken işlemleri bilgilendirme maili olarak ileteceğiz. Tebrik ederiz ! Aramıza hoş geldiniz.";
+        } else {
+            return "Değerli adayımız; Aselsan a-Yetenek programına göstermiş olduğun ilgi için teşekkür ederiz. Maalesef a-Yetenek başvurunuza olumlu geri dönüş yapamadığımızı belirtmek isteriz. \n";
+        }
+    };
     
     return (
         <Container>
             <Content>
                 <Section>
                     <Description>
-                          Merhaba; başvuru durumunuz aşağıda belirtildiği şekildedir. Değerlendirma aşamalarımız devam etmekte olup, en kısa sürede sizlere geri dönüş sağlayacağımızı
-                        bildirmek isteriz.  
+                        Merhaba; başvuru durumunuz aşağıda belirtildiği şekildedir.
                     </Description>
                     <Description>
-                        Başvuru durumu;    
-                    </Description>      
+                        Başvuru durumu:
+                        <StatusText>{getStatusText()}</StatusText>
+                    </Description>
                 </Section>
                 <Section>
                     <Welcome href="/">Çıkış Yap!</Welcome>
                 </Section>
-                <FixedIcon src="/images/ASELSAN_logo.svg"/>
+                <FixedIcon src="/images/ASELSAN_logo.svg" />
             </Content>
         </Container>
     );
@@ -72,13 +94,11 @@ const Description = styled.p`
     line-height: 1.5;
     color: #333;
     text-indent:20px;
+`;const StatusText = styled.p`
+font-weight: bold;
+margin-top: 10px;
 `;
-const İmportant = styled.p`
-    font-size: 16px;
-    line-height: 1.5;
-    color: #fc030f;
-    text-indent:20px;
-`;
+
 const FixedIcon = styled.img`
     position: fixed;
     bottom: 20px;

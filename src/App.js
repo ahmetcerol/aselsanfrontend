@@ -36,7 +36,7 @@ function App() {
           <Routes>
               <Route exact path ="/veri" element = {<KisiselVeriler isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} tcKimlik= {tcKimlik} setTcKimlik={setTcKimlik}/>}/>
               <Route exact path= "/" element = {<Login/>}/>
-              <Route exact path="/SignIn" element = {<SignIn isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}  />}/>
+              <Route exact path="/SignIn" element = {<SignIn isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}  tcKimlik={tcKimlik} setTcKimlik={setTcKimlik}/>}/>
               <Route exact path="/AselsanKültür" element= {<AselsanKültür/>}/>
               <Route exact path="/SiziNelerBekliyor" element = {<SiziNelerBekliyor/>}/>
               <Route exact path="/Olanaklar" element={<Olanaklar/>}/>

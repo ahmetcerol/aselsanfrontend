@@ -7,6 +7,7 @@ import { Navigate } from 'react-router-dom';
 const AdminPage = ({ isLoggedIn }) => {
     const [userData, setUserData] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
+    const [status, setStatus] = useState("");
 
 
     useEffect(() => {fetchUserData();}, []);
@@ -28,6 +29,19 @@ const AdminPage = ({ isLoggedIn }) => {
             console.error(response.data);
         } catch (error) {
             console.error('Veri çekme hatası:', error);
+        }
+    };
+
+    const updateApplicationStatus = async (tcKimlikNo, approved) => {
+        try {
+            await axios.post(`http://localhost:8080/${tcKimlikNo}/approve`, { approved });
+            setStatus("İşlem başarılı bir şekilde gerçekleşti !");
+            setTimeout(() => {
+               
+               setSelectedUser("");
+            }, 2500);
+        } catch (error) {
+            console.error('Başvuru durumu güncelleme hatası:', error);
         }
     };
 
@@ -69,6 +83,7 @@ const CardsContainer = styled.div`
     return (
         <Container>
             <Content>
+            <BgImage />
                 <Section>
                     <Description>
                         Merhabalar; başvuranların bilgileri şu şekildedir;
@@ -97,16 +112,18 @@ const CardsContainer = styled.div`
                     <UserInfo>StajBilgileri: {selectedUser.stajBilgileri}</UserInfo>
                     <UserInfo>Eğitim Bilgileri: {selectedUser.egitimBilgilerim}</UserInfo>
                     <UserInfo>Proje Deneyimleri: {selectedUser.projeDeneyimleri}</UserInfo>
-                    <Accept>Başvuruyu Kabul Et!</Accept>
+                    <Deny onClick={() => updateApplicationStatus(selectedUser.tcKimlikNo, false)}>Başvuruyu Reddet!</Deny>
+                    <Accept onClick={() => updateApplicationStatus(selectedUser.tcKimlikNo, true)}>Başvuruyu Kabul Et!</Accept>
+                    <İmportant>{status}</İmportant>
                 </SelectedUserContainer>
             )}
-           <BgImage />
+           
         </Container>
     );
 };
 
 const Container = styled.div`
-    border-radius: 0 0 24px 24px;
+
 `;
 
 const Content = styled.div`
@@ -167,6 +184,31 @@ right: 20px;
 
 &:hover {
     background-color: #3d78c4;
+}
+`;
+const İmportant = styled.p`
+    font-size: 16px;
+    line-height: 1.5;
+    color: #03fc35;
+    text-indent:20px;
+`;
+const Deny = styled.a`
+color: #f9f9f9;
+background-color:#820303;
+
+letter-spacing: 2px;
+font-size: 12px;
+padding: 14px 12px;
+border: 1px solid transparent;
+border-radius: 100px;
+text-align: center;
+user-select: none;
+margin-top: -25px;
+position: absolute;
+right: 200px;
+
+&:hover {
+    background-color: #c43d3d;
 }
 `;
 

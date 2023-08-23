@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import errorKeys from "../keys/errorKeys";
 import { useUser } from "../context/UserContext";
 
-const SignIn = ({ isLoggedIn, setIsLoggedIn }) => {
+const SignIn = ({ isLoggedIn, setIsLoggedIn, tcKimlik, setTcKimlik }) => {
 
   const navigate = useNavigate();
   const [error, setError] = useState(null);
@@ -42,6 +42,8 @@ const handleDurum = () => {
   .then(response => {
     if(response.data === true){
       setIsLoggedIn(true);
+      setTcKimlik(tcKimlikNo);
+      console.error(tcKimlikNo);
       navigate('/BaşvuruDurum');
     }
     else{navigate('/veri');}
