@@ -238,6 +238,7 @@ const StyledA = styled.a`
   margin-right: 23px;
   margin-top: 30px;
   display: flex;
+  user-select:none;
 
   span {
     color: #090382;

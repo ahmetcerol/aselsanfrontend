@@ -1,41 +1,43 @@
 import React from "react";
 import styled from "styled-components";
+import genelKey from "../keys/genelKeys";
+import footerKey from "../keys/footerKeys";
 
 const Footer = () => {
   return (
     <FooterContainer>
       <FooterLeft>
          <FooterParagraph>
-        Türk Silahlı Kuvvetleri'nin haberleşme ihtiyaçlarının milli imkanlarla karşılanması için 1975 yılında kurulan 
-        ASELSAN; Türk Silahlı Kuvvetlerini Güçlendirme Vakfı'na (TSKGV) bağlı bir anonim şirkettir. 
-        ASELSAN hisselerinin %74,20'si TSKGV'ye aittir, %25,80'lik kısım ise Borsa İstanbul'da (BİST) işlem görmektedir.
-        </FooterParagraph>
+            {footerKey.tskInfo}
+         </FooterParagraph>
         <CTALogo src="/images/tsk-logo.png" alt="TSK" />
         <FooterText>
-          <strong>ASELSAN A.Ş.</strong>
-          <a
-            href="https://www.tskgv.org.tr/en/#lightbox-gallery"
-           
-            rel="noopener"
-          >
-            Türk Silahlı Kuvvetlerini Güçlendirme Vakfı’nın bir kuruluşudur.
-          </a>
+          <strong>{footerKey.aselsanHeader}</strong>
+          <a href="https://www.tskgv.org.tr/en/#lightbox-gallery" target="_blank" rel="noreferrer">{footerKey.aselsanInfo}</a>
         </FooterText>
+       
       </FooterLeft>
       <FooterIcons>
-        <IconLink href="https://twitter.com/aselsan?t=xyRWdceEgETzsk85cfrXaA&s=08">
+        <IconLink href="https://twitter.com/aselsan?t=xyRWdceEgETzsk85cfrXaA&s=08" target="_blank" rel="noreferrer">
           <Icon src="/images/twitter.svg" alt="Twitter" />
         </IconLink>
-        <IconLink href="https://www.instagram.com/aselsan/?utm_medium=copy_link">
+        <IconLink href="https://www.instagram.com/aselsan/?utm_medium=copy_link" target="_blank" rel="noreferrer">
           <Icon src="/images/ınstagram.svg" alt="Instagram" />
         </IconLink>
-        <IconLink href="https://www.linkedin.com/company/aselsan/mycompany/verification/">
+        <IconLink href="https://www.linkedin.com/company/aselsan/mycompany/verification/" target="_blank" rel="noreferrer">
           <Icon src="/images/linkedin.svg" alt="LinkedIn" />
         </IconLink>
       </FooterIcons>
+      <Copyright>{genelKey.copyright}</Copyright>
     </FooterContainer>
   );
 };
+
+
+
+
+
+
 
 const FooterContainer = styled.footer`
   background-color: #003087;
@@ -44,14 +46,10 @@ const FooterContainer = styled.footer`
   justify-content: space-between;
   align-items: flex-start; /* Align icons to top right */
 `;
-
-
-
 const FooterLeft = styled.div`
   display: flex;
   align-items: center;
 `;
-
 const CTALogo = styled.img`
   max-width: 60px;
   margin-right: 20px;
@@ -91,9 +89,15 @@ const FooterIcons = styled.div`
     margin-right: 20px;
   }
 `;
+const Copyright = styled.p `
+position: absolute;
+margin-top:120px;
+margin-left: 45%;
+font-size: 13px;
+padding: 5px;
+color: darkgray;
 
-
-
+`;
 const Icon = styled.img`
   width: 30px;
   height: 30px;

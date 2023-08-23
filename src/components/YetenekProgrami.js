@@ -19,7 +19,7 @@ const YetenekProgrami = () => {
                         Yurt içi üniversitelerin Mühendislik, Fen-Edebiyat ve İktisadi ve İdari Bilimler örgün lisans programlarında son sınıf öğrencisi olanlar, artı olarak da Aselsan web sitesinde bulunan gerekli işe alım kriterlerini sağlayan adaylar başvurabileceklerdir. Kriterlerimize ulaşabilmek için; 
 
                     </Description>
-                    <a href="https://www.aselsan.com/tr/kariyer/ise-alim-surecimiz">
+                    <a href="https://www.aselsan.com/tr/kariyer/ise-alim-surecimiz" target="_blank" rel="noreferrer">
                     <DescriptionLink>
                         Aselsan İşe Alım Kriterleri
                     </DescriptionLink></a>

@@ -19,7 +19,7 @@ const ATik = () => {
                     
                     <Title>{aTikKeys.atikApplyAppTitle}</Title>
                     <Description>
-                        <Link href="https://vizyonergenc.com/" >www.vizyonergenc.com</Link>
+                        <Link href="https://vizyonergenc.com/"  target="_blank" rel="noreferrer">www.vizyonergenc.com</Link>
                         <br/><br/>{aTikKeys.atikApplyDescription}
                     </Description>
                 </Section>
