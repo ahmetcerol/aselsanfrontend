@@ -91,11 +91,12 @@ const FooterIcons = styled.div`
 `;
 const Copyright = styled.p `
 position: absolute;
-margin-top:120px;
+margin-top:80px;
 margin-left: 45%;
 font-size: 13px;
 padding: 5px;
 color: darkgray;
+
 
 `;
 const Icon = styled.img`

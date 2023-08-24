@@ -26,12 +26,12 @@ const BaşvuruDurumEkrani =  ({tcKimlik, isLoggedIn}) => {
     }
 
     const getStatusText = () => {
-        if (applicationStatus.approved === null) {
-            return "Başvurunuz henüz değerlendirme aşamasındadır. Her bilginizi dikkatli bir şekilde incelediğimizi bilmenizi isteriz. En kısa sürede sizlere geri dönüş yapacağız.";
+        if (applicationStatus.approved === false) {
+            return "Değerli adayımız; Aselsan a-Yetenek programına göstermiş olduğun ilgi için teşekkür ederiz. Maalesef a-Yetenek başvurunuza olumlu geri dönüş yapamadığımızı belirtmek isteriz. \n";
         } else if (applicationStatus.approved === true) {
             return "Başvurunuz onaylanmıştır. En kısa sürede sizlere yapmanız gereken işlemleri bilgilendirme maili olarak ileteceğiz. Tebrik ederiz ! Aramıza hoş geldiniz.";
         } else {
-            return "Değerli adayımız; Aselsan a-Yetenek programına göstermiş olduğun ilgi için teşekkür ederiz. Maalesef a-Yetenek başvurunuza olumlu geri dönüş yapamadığımızı belirtmek isteriz. \n";
+            return "Başvurunuz henüz değerlendirme aşamasındadır. Her bilginizi dikkatli bir şekilde incelediğimizi bilmenizi isteriz. En kısa sürede sizlere geri dönüş yapacağız.";
         }
     };
     

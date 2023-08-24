@@ -104,7 +104,7 @@ const CardsContainer = styled.div`
                 </Section>
                 <FixedIcon src="/images/aselsan-logo.png" />
             </Content>
-            
+            <ContainerSection>
             {selectedUser && (
                 <SelectedUserContainer>
                     <UserInfo>Ad: {selectedUser.ad}</UserInfo>
@@ -117,13 +117,14 @@ const CardsContainer = styled.div`
                     <İmportant>{status}</İmportant>
                 </SelectedUserContainer>
             )}
-           
+           </ContainerSection>
         </Container>
     );
 };
 
 const Container = styled.div`
-
+`;
+const ContainerSection = styled.div`
 `;
 
 const Content = styled.div`
@@ -132,7 +133,11 @@ const Content = styled.div`
     padding: 40px;
     margin-top: 20px;
     border-radius: 0 0 24px 24px;
-`;
+    min-height: 100vh; /* Set minimum height to cover the whole viewport */
+    display: flex;
+    flex-direction: column;
+   
+    `;
 const BgImage = styled.div`
 height: 100%;
 background-position: top;

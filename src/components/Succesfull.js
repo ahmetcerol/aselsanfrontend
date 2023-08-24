@@ -9,9 +9,10 @@ const Succesfull = (isLoggedIn) => {
             <CTA>
                 
                 <Description>
-                Başvurunuz başarılı bir şekilde gerçekleşmiştir. En kısa sürede seni aramızda görmek dileğiyle, iyi günler !
+                Başvurunuz başarılı bir şekilde gerçekleşmiştir. Başvuru durumunuzu ileriki günlerde yine buradan giriş yaparak öğrenebilirsiniz.En kısa sürede seni aramızda görmek dileğiyle, iyi günler !
                 </Description>
-                <Welcome href="https://www.aselsan.com/tr">Aselsan Sitesini Ziyaret Et</Welcome>
+                <Welcome href="https://www.aselsan.com/tr" target="_blank">Aselsan Sitesini Ziyaret Et</Welcome>
+                <Welcome href="/">Çıkış Yap</Welcome>
                 <RowElements>
                     <CTALogoTwo src="/images/a-gelecek.png"/>
                     <CTALogoTwo src="/images/atik.png"/>
