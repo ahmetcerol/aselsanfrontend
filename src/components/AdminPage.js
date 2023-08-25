@@ -109,9 +109,36 @@ const CardsContainer = styled.div`
                 <SelectedUserContainer>
                     <UserInfo>Ad: {selectedUser.ad}</UserInfo>
                     <UserInfo>Soyad: {selectedUser.soyad}</UserInfo>
-                    <UserInfo>StajBilgileri: {selectedUser.stajBilgileri}</UserInfo>
-                    <UserInfo>Eğitim Bilgileri: {selectedUser.egitimBilgilerim}</UserInfo>
-                    <UserInfo>Proje Deneyimleri: {selectedUser.projeDeneyimleri}</UserInfo>
+                    
+                    
+                    <StajBilgileriContainer>
+                    {selectedUser.stajBilgileri.map((staj, index) => (
+                            <div key={index}>
+                                <UserInfo>Staj Yeri: {staj.stajYeri}</UserInfo>
+                                <UserInfo>Staj Bölümü: {staj.stajBölümü}</UserInfo>
+                                <UserInfo>Staj Süresi: {staj.stajSüresi}</UserInfo>
+                                <UserInfo>Staj Türü: {staj.stajTürü}</UserInfo>
+                               
+                            </div>
+                        ))}
+                                                </StajBilgileriContainer>
+                                                <StajBilgileriContainer>
+                      <UserInfo>Eğitim Bilgileri</UserInfo>
+                        {selectedUser.egitimBilgilerim.map((egitim, index) => (
+                            <div key={index}>
+                                <UserInfo>Okul Adı: {egitim.okulAdi}</UserInfo>
+                                <UserInfo>Bitiş Tarihi: {egitim.finishDate}</UserInfo>
+                                
+                            </div>
+                        ))}  </StajBilgileriContainer> <StajBilgileriContainer>
+                    <UserInfo>Proje Deneyimleri</UserInfo>
+                        {selectedUser.projeDeneyimleri.map((proje, index) => (
+                            <div key={index}>
+                                <UserInfo>Proje Adı: {proje.projeAdi}</UserInfo>
+                                <UserInfo>Proje Kurumu: {proje.projeKurum}</UserInfo>
+                                <UserInfo>Proje Detayı: {proje.projeDetay}</UserInfo>
+                            </div>
+                        ))} </StajBilgileriContainer>
                     <Deny onClick={() => updateApplicationStatus(selectedUser.tcKimlikNo, false)}>Başvuruyu Reddet!</Deny>
                     <Accept onClick={() => updateApplicationStatus(selectedUser.tcKimlikNo, true)}>Başvuruyu Kabul Et!</Accept>
                     <İmportant>{status}</İmportant>
@@ -152,7 +179,13 @@ z-index: -1;
 `;
 const Section = styled.div`
     margin-bottom: 40px;
+`;const StajBilgileriContainer = styled.div`
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+margin-bottom: 15px;
 `;
+
 
 const Welcome = styled.a`
     color: #f9f9f9;
