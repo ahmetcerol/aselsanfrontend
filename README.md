@@ -4,7 +4,7 @@
 
 *Bu proje Aselsan'da yapmış olduğum staj boyunca geliştirdiğim, A Yetenek Web Sayfasının ön yüz dizaynını içermektedir.*
 
-*Genel olarak projemizin amacı, A Yetenek adaylarının başvurularının alınabileceği bir web sayfası yaratmak ve adaylardan aldığımız bilgileri İnsan Kaynaklarına sergileyebileceğimiz bir arayüz oluşturmaktır.*
+Genel olarak projemizin amacı, A Yetenek adaylarının başvurularının alınabileceği bir web sayfası yaratmak ve adaylardan aldığımız bilgileri İnsan Kaynaklarına sergileyebileceğimiz bir arayüz oluşturmaktır.
 
 *Projemiz yine benim tarafımdan yazılan backend kodlarıyla tamamlanmıştır. Backend kısmından çektiğimiz işlemlerle logging, authorization, tc kimlik no doğrulama işlemlerini gerçekleştirirek, yine kullanıcıdan aldığımız bilgilerin doğruluğunu kontrol etmekteyiz.*
 
