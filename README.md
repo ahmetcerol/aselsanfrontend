@@ -1,45 +1,18 @@
-# Getting Started with Create React App
+# A-Yetenek 
+## Aselsan Front End
+###### Producer:Ahmet Can Erol
 
- This project building for Aselsan Internship.
+*Bu proje Aselsan'da yapmış olduğum staj boyunca geliştirdiğim, A Yetenek Web Sayfasının ön yüz dizaynını içermektedir.*
 
-## Available Scripts
+*Genel olarak projemizin amacı, A Yetenek adaylarının başvurularının alınabileceği bir web sayfası yaratmak ve adaylardan aldığımız bilgileri İnsan Kaynaklarına sergileyebileceğimiz bir arayüz oluşturmaktır.*
 
-First you must install, react-dom, react-styled-components-axios;
+* Projemiz yine benim tarafımdan yazılan backend kodlarıyla tamamlanmıştır. Backend kısmından çektiğimiz işlemlerle logging, authorization, tc kimlik no doğrulama işlemlerini gerçekleştirirek, yine kullanıcıdan aldığımız bilgilerin doğruluğunu kontrol etmekteyiz.*
 
-## `npm i react-dom`
-## `npm i react-styled-components`
-## `npm i axios`
 
-Then ın the project directory, you can run with;
-### `npm start`
+## ENGLISH
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+*This project encompasses the front-end design of the A-Yetenek web page, which I developed during my internship at Aselsan.*
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+*The main objective of our project is to create a web page where A-Yetenek candidates can submit their applications and to build an interface where we can showcase the information we receive from candidates to the Human Resources department.*
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+*The project has been completed with the backend code written by me. We perform logging, authorization, and Turkish identity number verification processes using the operations we fetch from the backend. We also verify the accuracy of the information received from the users.*
